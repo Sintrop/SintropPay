@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import TokenImg from '../../assets/img/token.png';
+import { ModalGeneratedCode } from './components/ModalGeneratedCode';
 
 export function Receive() {
     const [unit, setUnit] = useState('brl');
     const [saleValue, setSaleValue] = useState('');
     const [totalReceive, setTotalReceive] = useState(0);
+    const [modalGenerated, setModalGenerated] = useState(false);
 
     useEffect(() => {
         if(saleValue.trim()){
@@ -12,7 +14,11 @@ export function Receive() {
         }else{
             setTotalReceive(0);
         }
-    }, [saleValue])
+    }, [saleValue]);
+
+    function generatePaymentCode(){
+        setModalGenerated(true)
+    }
 
     return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
@@ -64,11 +70,18 @@ export function Receive() {
 
                     <button
                         className='font-bold text-white w-full h-14 rounded-md bg-blue-primary mt-10'
+                        onClick={generatePaymentCode}
                     >
                         Gerar código de pagamento
                     </button>
                 </div>
             </div>
+
+            {modalGenerated && (
+                <ModalGeneratedCode
+                    close={() => setModalGenerated(false)}
+                />
+            )}
         </main>
     )
 }
