@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
+import { useMainContext } from "../../hooks/useMainContext";
 
 export function Home() {
+    const {walletConnected} = useMainContext();
 
     return (
-        <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
-            <div className="flex flex-col w-full lg:max-w-[1024px]">
+        <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">
+            <div className="flex flex-col w-full lg:max-w-[1024px] pb-20">
 
                 <h1 className="text-white font-bold text-5xl mb-14 mt-10">Sintrop Pay</h1>
 
@@ -35,7 +37,7 @@ export function Home() {
 
                 <div className="flex flex-col gap-2 mt-10">
                     <h3 className="font-bold text-white text-2xl">Olá</h3>
-                    <p className="text-white text-lg">0x788hd788dhf73hyGDJDUhf893hhf7839jdb</p>
+                    <p className="text-white text-lg">{walletConnected}</p>
                 </div>
 
                 <div className="flex flex-col gap-3 mt-5">

@@ -1,22 +1,36 @@
 import { useEffect, useState } from 'react';
 import TokenImg from '../../assets/img/token.png';
 import { ModalGeneratedCode } from './components/ModalGeneratedCode';
+import { useMainContext } from '../../hooks/useMainContext';
 
 export function Receive() {
-    const [unit, setUnit] = useState('brl');
+    const {walletConnected} = useMainContext();
+    const [unit, setUnit] = useState('BRL');
     const [saleValue, setSaleValue] = useState('');
     const [totalReceive, setTotalReceive] = useState(0);
     const [modalGenerated, setModalGenerated] = useState(false);
+    const [paymentCode, setPaymentCode] = useState('');
+
+    const RC_TO_BRL = 0.0282;
 
     useEffect(() => {
         if(saleValue.trim()){
-            setTotalReceive(Number(saleValue) * 0.0282);
+            setTotalReceive(Number(String(saleValue).replace(',', '.')) / RC_TO_BRL);
         }else{
             setTotalReceive(0);
         }
     }, [saleValue]);
 
     function generatePaymentCode(){
+        // Estrutura do código de pagamento
+        // [WalletDestino]-[ValorParaTransferir]-[MoedaDeTransferência]-[ValorOriginal]-[MoedaDeCalculo]-[CotaçaoNoMomento];
+
+        const code = 
+        `
+            ${walletConnected}-${totalReceive}-RC-${String(saleValue).replace(',', '.')}-${unit}-${RC_TO_BRL}
+        `;
+
+        setPaymentCode(code);
         setModalGenerated(true)
     }
 
@@ -46,7 +60,7 @@ export function Receive() {
                                 onChange={(e) => setUnit(e.target.value)}
                                 className='w-full px-3 h-14 text-white rounded-md bg-container-secondary'
                             >
-                                <option value='brl'>R$ (BRL)</option>
+                                <option value='BRL'>R$ (BRL)</option>
                             </select>
                         </div>
 
@@ -65,7 +79,7 @@ export function Receive() {
 
                     <div className='flex items-center justify-between mt-5'>
                         <p className='text-white font-bold'>Total a receber</p>
-                        <p className='font-bold text-green-primary text-xl'>{Intl.NumberFormat('pt-BR', {maximumFractionDigits:0}).format(totalReceive)} RC</p>
+                        <p className='font-bold text-green-primary text-xl'>{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 2}).format(totalReceive)} RC</p>
                     </div>
 
                     <button
@@ -80,6 +94,7 @@ export function Receive() {
             {modalGenerated && (
                 <ModalGeneratedCode
                     close={() => setModalGenerated(false)}
+                    paymentCode={paymentCode}
                 />
             )}
         </main>

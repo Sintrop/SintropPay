@@ -3,9 +3,10 @@ import { useMainContext } from '../../../hooks/useMainContext';
 
 interface Props{
     close: () => void;
+    paymentCode: string;
 }
 
-export function ModalGeneratedCode({close}: Props) {
+export function ModalGeneratedCode({close, paymentCode}: Props) {
     const {walletConnected} = useMainContext();
     
     return (
@@ -39,7 +40,7 @@ export function ModalGeneratedCode({close}: Props) {
                     <p className="text-xs text-gray-300 my-5">ou escaneie o QR Code abaixo</p>
 
                     <QRCode 
-                        value="0xu798euw9hd98ewhdfbf-15024-brl-rc-uhduidsjbduiyw89ye99w8ue9" 
+                        value={paymentCode} 
                         size={170}
                     />
                 </div>
