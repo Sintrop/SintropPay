@@ -1,49 +1,80 @@
 import { Link } from "react-router-dom";
+import TokenImg from '../../assets/img/token.png';
 
-export function Home(){
+export function Home() {
 
-    return(
-        <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
+    return (
+        <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col w-full lg:max-w-[1024px]">
-                
-                        <h1 className="text-white font-bold text-5xl">Sintrop Pay</h1>
 
-                        <div className="flex mt-20 gap-5 flex-wrap">
-                            <Link
-                                className="w-[150px] h-[150px] bg-container-primary rounded-md p-3 shadow-lg flex flex-col justify-between"
-                                to='/send'
-                            >
-                                <div className="w-10 h-10 bg-red-400"/>
+                <h1 className="text-white font-bold text-5xl mb-14 mt-10">Sintrop Pay</h1>
 
-                                <p className="font-bold text-white">Pagar</p>
-                            </Link>
+                <div
+                    className="bg-container-primary rounded-md px-5 py-3 flex flex-col w-[320px]"
+                >
+                    <div className="flex items-center w-full justify-between">
+                        <p className="text-white text-lg">Meu patrimônio em</p>
+                        <button
+                            className="w-5 h-5 bg-red-500"
+                        >
 
-                            <Link
-                                className="w-[150px] h-[150px] bg-container-primary rounded-md p-3 shadow-lg flex flex-col justify-between"
-                                to='/receive'
-                            >
-                                <div className="w-10 h-10 bg-red-400"/>
+                        </button>
+                    </div>
 
-                                <p className="font-bold text-white">Cobrar</p>
-                            </Link>
+                    <div className="flex items-center gap-2 my-5">
+                        <img
+                            src={TokenImg}
+                            className="w-10 h-10 object-contain"
+                        />
 
-                            <button
-                                className="w-[150px] h-[150px] bg-container-primary rounded-md p-3 shadow-lg flex flex-col justify-between"
-                            >
-                                <div className="w-10 h-10 bg-red-400"/>
+                        <p className="text-white text-lg">RC</p>
+                    </div>
 
-                                <p className="font-bold text-white">Minhas transações</p>
-                            </button>
+                    <p className="font-bold text-white text-lg">************</p>
+                </div>
 
-                            <button
-                                className="w-[150px] h-[150px] bg-container-primary rounded-md p-3 shadow-lg flex flex-col justify-between"
-                            >
-                                <div className="w-10 h-10 bg-red-400"/>
+                <div className="flex flex-col gap-2 mt-10">
+                    <h3 className="font-bold text-white text-2xl">Olá</h3>
+                    <p className="text-white text-lg">0x788hd788dhf73hyGDJDUhf893hhf7839jdb</p>
+                </div>
 
-                                <p className="font-bold text-white">Checkout Crédito de Regeneração</p>
-                            </button>
-                        </div>
-                    
+                <div className="flex flex-col gap-3 mt-5">
+                    <p className="text-white text-lg">O que você gostaria de fazer?</p>
+                    <Link
+                        className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
+                        to='/receive'
+                    >
+                        <div className="w-10 h-10 bg-red-400" />
+
+                        <p className="text-white">Vender produto/serviço</p>
+                    </Link>
+                    <Link
+                        className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
+                        to='/send'
+                    >
+                        <div className="w-10 h-10 bg-red-400" />
+
+                        <p className="text-white">Comprar produto/serviço</p>
+                    </Link>
+
+                    <Link
+                        className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
+                        to='/send'
+                    >
+                        <div className="w-10 h-10 bg-red-400" />
+
+                        <p className="text-white">Extrato</p>
+                    </Link>
+
+                    <Link
+                        className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
+                        to='/send'
+                    >
+                        <div className="w-10 h-10 bg-red-400" />
+
+                        <p className="text-white">Checkout</p>
+                    </Link>
+                </div>
             </div>
         </main>
     )
