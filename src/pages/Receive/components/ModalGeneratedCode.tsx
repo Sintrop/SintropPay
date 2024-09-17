@@ -1,10 +1,13 @@
 import { QRCode } from 'react-qrcode-logo';
+import { useMainContext } from '../../../hooks/useMainContext';
 
 interface Props{
     close: () => void;
 }
 
 export function ModalGeneratedCode({close}: Props) {
+    const {walletConnected} = useMainContext();
+    
     return (
         <div className='flex justify-center items-center inset-0 '>
             <div className='bg-[rgba(0,0,0,0.6)] fixed inset-0 ' />
@@ -18,7 +21,7 @@ export function ModalGeneratedCode({close}: Props) {
                 </button>
 
                 <p className="text-white font-bold mt-10">Wallet de destino:</p>
-                <p className="text-white mb-3">0xiufhe8h8iuwbdsuiah99ewjdoeijdoewijf</p>
+                <p className="text-white mb-3">{walletConnected}</p>
 
                 <p className="text-white font-bold">Valor:</p>
                 <p className="text-white mb-3">R$ 50</p>
