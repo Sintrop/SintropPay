@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { PaymentDataProps, SplitPaymentCode } from "../../services/SplitPaymentCode";
+import { useNavigate, useParams } from "react-router-dom";
+import { PaymentDataProps, SplitPaymentCode } from "../../services/PaymentCode";
+import { LoadingTransaction } from "../../components/LoadingTransaction/LoadingTransaction";
 
 export function ConfirmPayment(){
+    const navigate = useNavigate();
     const {paymentCode} = useParams();
     const [paymentData, setPaymentData]= useState({} as PaymentDataProps);
+    const [loadingTransaction, setLoadingTransaction] = useState(false);
 
     useEffect(() => {
         splitCode();
@@ -41,12 +44,27 @@ export function ConfirmPayment(){
                     <div className="mt-10 flex justify-end">
                         <button
                             className="h-12 px-10 rounded-md bg-blue-primary text-white font-bold"
+                            onClick={() => setLoadingTransaction(true)}
                         >
                             Confirmar transação
                         </button>
                     </div>
                 </div>
             </div>
+
+            {loadingTransaction && (
+                <LoadingTransaction
+                    close={() => setLoadingTransaction(false)}
+                    success={() => {
+                        navigate('/dashboard', {replace: true})
+                    }}
+                    typeTransaction="payment"
+                    transactionData={{
+                        value: paymentData.valueTransfer,
+                        walletTo: paymentData.walletToSend
+                    }}
+                />
+            )}
         </main>
     )
 }

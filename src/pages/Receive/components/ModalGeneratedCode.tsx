@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { useMainContext } from '../../../hooks/useMainContext';
 import { toast } from 'react-toastify';
-import { PaymentDataProps, SplitPaymentCode } from '../../../services/SplitPaymentCode';
+import { PaymentDataProps, SplitPaymentCode } from '../../../services/PaymentCode';
 
 interface Props{
     close: () => void;
