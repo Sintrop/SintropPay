@@ -4,6 +4,7 @@ import { Send } from "../pages/Send/Send";
 import { Sync } from "../pages/Sync/Sync";
 import { Receive } from "../pages/Receive/Receive";
 import { ConfirmPayment } from "../pages/ConfirmPayment/ConfirmPayment";
+import { Transactions } from "../pages/Transactions/Transactions";
 
 export const router = createBrowserRouter([
     {
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
     {
         path: '/confirm-payment/:paymentCode',
         Component: ConfirmPayment
+    },
+    {
+        path: '/transactions',
+        Component: Transactions
     },
 ])

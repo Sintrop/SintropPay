@@ -2,20 +2,31 @@ import { Link, useNavigate } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
 import { useMainContext } from "../../hooks/useMainContext";
 import { useEffect, useState } from "react";
+import { GetTransactionsUser, TransactionProps } from "../../services/GetTransactionsUser";
+import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
 
 export function Home() {
     const navigate = useNavigate();
     const {walletConnected, balanceUser} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
+    const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
     useEffect(() => {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
+        if(walletConnected !== ''){
+            getTransactions();
+        }
     }, [walletConnected]);
 
     function toggleVisibilityBalance(){
         setVisibleBalance(oldValue => !oldValue);
+    }
+
+    async function getTransactions(){
+        const response = await GetTransactionsUser(walletConnected);
+        setTransactions(response);
     }
 
     return (
@@ -57,7 +68,7 @@ export function Home() {
 
                 <div className="flex flex-col gap-2 mt-10">
                     <h3 className="font-bold text-white text-2xl">Olá</h3>
-                    <p className="text-white text-lg">{walletConnected}</p>
+                    <p className="text-white text-sm text-truncate">{walletConnected}</p>
                 </div>
 
                 <div className="flex flex-col gap-3 mt-5">
@@ -81,21 +92,32 @@ export function Home() {
 
                     <Link
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
-                        to='/send'
+                        to='/transactions'
                     >
                         <div className="w-10 h-10 bg-red-400" />
 
                         <p className="text-white">Extrato</p>
                     </Link>
 
-                    <Link
+                    {/* <Link
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/send'
                     >
                         <div className="w-10 h-10 bg-red-400" />
 
                         <p className="text-white">Checkout</p>
-                    </Link>
+                    </Link> */}
+                </div>
+
+                <p className="text-gray-300 text-xs text-center mt-7">Últimas movimentações</p>
+
+                <div className="flex flex-col gap-3 mt-2">
+                    {transactions.slice(0, 5).map(item => (
+                        <TransactionItem
+                            key={item.hash}
+                            data={item}
+                        />
+                    ))}
                 </div>
             </div>
         </main>
