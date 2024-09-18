@@ -1,9 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
 import { useMainContext } from "../../hooks/useMainContext";
+import { useEffect } from "react";
 
 export function Home() {
+    const navigate = useNavigate();
     const {walletConnected} = useMainContext();
+
+    useEffect(() => {
+        if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+    }, [walletConnected]);
 
     return (
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">

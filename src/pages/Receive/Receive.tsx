@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import TokenImg from '../../assets/img/token.png';
 import { ModalGeneratedCode } from './components/ModalGeneratedCode';
 import { useMainContext } from '../../hooks/useMainContext';
+import { useNavigate } from 'react-router-dom';
 
 export function Receive() {
+    const navigate = useNavigate();
     const {walletConnected} = useMainContext();
     const [unit, setUnit] = useState('BRL');
     const [saleValue, setSaleValue] = useState('');
@@ -12,6 +14,12 @@ export function Receive() {
     const [paymentCode, setPaymentCode] = useState('');
 
     const RC_TO_BRL = 0.0282;
+
+    useEffect(() => {
+        if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+    }, [walletConnected]);
 
     useEffect(() => {
         if(saleValue.trim()){
@@ -34,7 +42,7 @@ export function Receive() {
     return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col w-full lg:max-w-[420px] px-3 lg:px-0">
-                <h1 className="text-white font-bold text-5xl mb-10">Receive</h1>
+                <h1 className="text-white font-bold text-5xl mb-10">Receber</h1>
 
                 <div className="flex flex-col gap-1 w-full p-3 rounded-md bg-container-primary">
                     <p className="text-white">Você vai receber em:</p>

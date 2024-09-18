@@ -2,12 +2,20 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { PaymentDataProps, SplitPaymentCode } from "../../services/PaymentCode";
 import { LoadingTransaction } from "../../components/LoadingTransaction/LoadingTransaction";
+import { useMainContext } from "../../hooks/useMainContext";
 
 export function ConfirmPayment(){
+    const {walletConnected} = useMainContext();
     const navigate = useNavigate();
     const {paymentCode} = useParams();
     const [paymentData, setPaymentData]= useState({} as PaymentDataProps);
     const [loadingTransaction, setLoadingTransaction] = useState(false);
+
+    useEffect(() => {
+        if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+    }, [walletConnected]);
 
     useEffect(() => {
         splitCode();

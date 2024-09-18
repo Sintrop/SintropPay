@@ -1,11 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ModalScanQR } from "./components/ModalScanQR/ModalScanQR";
 import { useNavigate } from "react-router-dom";
+import { useMainContext } from "../../hooks/useMainContext";
 
 export function Send() {
     const navigate = useNavigate();
+    const {walletConnected} = useMainContext();
     const [ler, setLer] = useState(false);
     const [paymentCode, setPaymentCode] = useState('');
+
+    useEffect(() => {
+        if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+    }, [walletConnected]);
 
     function handleNavigateToConfirm(paymentCode: string) {
         navigate(`/confirm-payment/${paymentCode}`);
@@ -14,11 +22,11 @@ export function Send() {
     return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col w-full lg:max-w-[420px] px-3 lg:px-0">
-                <h1 className="text-white font-bold text-5xl mb-20">Pay</h1>
+                <h1 className="text-white font-bold text-5xl mb-20">Pagar</h1>
 
                 <div className="flex flex-col gap-1 w-full p-3 rounded-md bg-container-primary">
                     <div className='flex flex-col gap-1 w-full'>
-                        <label className='text-white' htmlFor='input-code'>Cole o código de pagamento::</label>
+                        <label className='text-white' htmlFor='input-code'>Cole o código de pagamento:</label>
                         <input
                             name='input-code'
                             value={paymentCode}
