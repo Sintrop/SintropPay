@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { useMainContext } from '../../../hooks/useMainContext';
+import { toast } from 'react-toastify';
+import { PaymentDataProps, SplitPaymentCode } from '../../../services/SplitPaymentCode';
 
 interface Props{
     close: () => void;
@@ -8,6 +11,23 @@ interface Props{
 
 export function ModalGeneratedCode({close, paymentCode}: Props) {
     const {walletConnected} = useMainContext();
+    const [paymentData, setPaymentData]= useState({} as PaymentDataProps);
+
+    useEffect(() => {
+        splitCode();
+    }, []);
+
+    function splitCode(){
+        const data = SplitPaymentCode(paymentCode as string);
+        if(data){
+            setPaymentData(data);
+        }
+    }
+
+    function handleCopyToClipboard(){
+        navigator.clipboard.writeText(paymentCode);
+        toast.success('Código copiado para área de transferência!');
+    }
     
     return (
         <div className='flex justify-center items-center inset-0 '>
@@ -25,14 +45,15 @@ export function ModalGeneratedCode({close, paymentCode}: Props) {
                 <p className="text-white mb-3">{walletConnected}</p>
 
                 <p className="text-white font-bold">Valor:</p>
-                <p className="text-white mb-3">R$ 50</p>
+                <p className="text-white mb-3">{paymentData?.originalValue} {paymentData?.calculationCurrency}</p>
 
                 <p className="text-white font-bold">Conversão:</p>
-                <p className="text-white mb-3">12.500 RC</p>
+                <p className="text-white mb-3">{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 2}).format(paymentData?.valueTransfer)} {paymentData?.criptoTransfer}</p>
 
                 <div className="mt-5 items-center flex flex-col">
                     <button
                         className="font-bold text-white px-10 h-14 rounded-md bg-blue-primary"
+                        onClick={handleCopyToClipboard}
                     >
                         Copiar código de pagamento
                     </button>
