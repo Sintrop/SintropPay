@@ -33,7 +33,7 @@ export function ModalGeneratedCode({close, paymentCode}: Props) {
         <div className='flex justify-center items-center inset-0 '>
             <div className='bg-[rgba(0,0,0,0.6)] fixed inset-0 ' />
 
-            <div className='absolute flex flex-col p-3 lg:w-[500px] lg:h-[600px] bg-container-primary rounded-md mx-2 my-2 lg:my-auto lg:mx-auto inset-0 border-2 z-10'>
+            <div className='absolute flex flex-col p-3 lg:w-[500px] lg:h-[600px] bg-container-primary rounded-md mx-2 my-2 lg:my-auto lg:mx-auto inset-0 border-2 z-10 overflow-y-auto overflow-x-hidden'>
                 <button
                     className='absolute right-5 top-5'
                     onClick={close}
