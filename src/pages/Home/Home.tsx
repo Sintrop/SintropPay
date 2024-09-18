@@ -1,17 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
 import { useMainContext } from "../../hooks/useMainContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Home() {
     const navigate = useNavigate();
-    const {walletConnected} = useMainContext();
+    const {walletConnected, balanceUser} = useMainContext();
+    const [visibleBalance, setVisibleBalance] = useState(false);
 
     useEffect(() => {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
     }, [walletConnected]);
+
+    function toggleVisibilityBalance(){
+        setVisibleBalance(oldValue => !oldValue);
+    }
 
     return (
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">
@@ -26,6 +31,7 @@ export function Home() {
                         <p className="text-white text-lg">Meu patrimônio em</p>
                         <button
                             className="w-5 h-5 bg-red-500"
+                            onClick={toggleVisibilityBalance}
                         >
 
                         </button>
@@ -40,7 +46,13 @@ export function Home() {
                         <p className="text-white text-lg">RC</p>
                     </div>
 
-                    <p className="font-bold text-white text-lg">************</p>
+                    <p className="font-bold text-white text-xl">
+                        {visibleBalance ? (
+                            Number(balanceUser).toFixed(5)
+                        ) : (
+                            '*************'
+                        )}
+                    </p>
                 </div>
 
                 <div className="flex flex-col gap-2 mt-10">

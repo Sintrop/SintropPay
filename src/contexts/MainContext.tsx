@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { SyncWallet } from "../services/SyncWallet";
+import { GetBalanceRC } from "../services/web3/RCToken";
 
 interface ReturnSyncWalletProps{
     success: boolean;
@@ -8,6 +9,7 @@ interface ReturnSyncWalletProps{
 export interface MainContextProps{
     walletConnected: string;
     syncWallet: () => Promise<ReturnSyncWalletProps>;
+    balanceUser: string;
 }
 
 interface MainProviderProps{
@@ -18,6 +20,18 @@ export const MainContext = createContext({} as MainContextProps);
 
 export function MainContextProvider({children}: MainProviderProps){
     const [walletConnected, setWalletConnected] = useState('');
+    const [balanceUser,  setBalanceUser] = useState('');
+
+    useEffect(() => {
+        if(walletConnected !== ''){
+            getBalanceRC();
+        }
+    }, [walletConnected]);
+
+    async function getBalanceRC() {
+        const response = await GetBalanceRC(walletConnected);
+        setBalanceUser(response);
+    }
 
     async function syncWallet(): Promise<ReturnSyncWalletProps>{
         const wallet = await SyncWallet();
@@ -38,7 +52,8 @@ export function MainContextProvider({children}: MainProviderProps){
         <MainContext.Provider
             value={{
                 walletConnected,
-                syncWallet
+                syncWallet,
+                balanceUser
             }}
         >
             {children}

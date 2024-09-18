@@ -58,3 +58,15 @@ export async function SendTransaction({value, walletFrom, walletTo}: SendTransac
         }
     }
 }
+
+export async function GetBalanceRC(address: string): Promise<string>{
+    try{
+        const response = await RCTokenContract.methods.balanceOf(address).call();
+        const resBalance = Number(String(response).replace('n', ''));
+        const balanceFormarterToEther = web3.utils.fromWei(resBalance, 'ether');
+
+        return balanceFormarterToEther
+    }catch(e){
+        return '0';
+    }
+}
