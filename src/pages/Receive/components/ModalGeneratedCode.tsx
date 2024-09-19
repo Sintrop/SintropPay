@@ -3,6 +3,7 @@ import { QRCode } from 'react-qrcode-logo';
 import { useMainContext } from '../../../hooks/useMainContext';
 import { toast } from 'react-toastify';
 import { PaymentDataProps, SplitPaymentCode } from '../../../services/PaymentCode';
+import { Icon } from '../../../components/Icon/Icon';
 
 interface Props{
     close: () => void;
@@ -38,7 +39,7 @@ export function ModalGeneratedCode({close, paymentCode}: Props) {
                     className='absolute right-5 top-5'
                     onClick={close}
                 >
-                    X
+                    <Icon name='close'/>
                 </button>
 
                 <p className="text-white font-bold mt-10">Wallet de destino:</p>
@@ -52,9 +53,10 @@ export function ModalGeneratedCode({close, paymentCode}: Props) {
 
                 <div className="mt-5 items-center flex flex-col">
                     <button
-                        className="font-bold text-white px-10 h-14 rounded-md bg-blue-primary"
+                        className="font-bold text-white px-10 h-14 rounded-md bg-blue-primary flex items-center justify-center gap-3"
                         onClick={handleCopyToClipboard}
                     >
+                        <Icon name='copy' size={25}/>
                         Copiar código de pagamento
                     </button>
 
