@@ -7,20 +7,26 @@ declare global{
     }
 }
 
-export async function SyncWallet(){
+export async function SyncWallet(): Promise<string>{
     if(window.ethereum){
         try{
-            const addresses = window?.ethereum.request({
+            await window?.ethereum.request({
                 method: 'eth_requestAccounts'
             });
 
-            return addresses;
+            const address = window.ethereum.selectedAddress;
+
+            if(address){
+                return address;
+            }
+
+            return ''
         }catch(err){
             console.log(err);
-            return []
+            return ''
         }
     }else{
         toast.error('Sem provedor ethereum!');
-        return []
+        return ''
     }
 }

@@ -36,8 +36,8 @@ export function MainContextProvider({ children }: MainProviderProps) {
     async function syncWallet() {
         const wallet = await SyncWallet();
 
-        if (wallet) {
-            setWalletConnected(wallet[0]);
+        if (wallet !== '') {
+            setWalletConnected(wallet);
             return {
                 success: true,
             };
