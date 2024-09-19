@@ -25,7 +25,7 @@ export async function SendTransaction({value, walletFrom, walletTo}: SendTransac
     let message = '';
     let code = 0;
     console.log(value)
-    const valueWei = web3.utils.toWei(value as number, 'ether');
+    const valueWei = web3.utils.toWei(String(value), 'ether');
     console.log(valueWei)
     // const valueBigInt = web3.utils.toBigInt(valueWei);
     // console.log(valueBigInt)
