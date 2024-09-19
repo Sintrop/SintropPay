@@ -1,6 +1,7 @@
 import { ArrowDown } from "../../assets/icons/ArrowDown"
 import { ArrowUp } from "../../assets/icons/ArrowUp";
 import { Cart } from "../../assets/icons/Cart";
+import { ChevronLeft } from "../../assets/icons/ChevronLeft";
 import { Close } from "../../assets/icons/Close";
 import { Copy } from "../../assets/icons/Copy";
 import { EyeOff } from "../../assets/icons/EyeOff";
@@ -36,7 +37,8 @@ const icons = {
     house: House,
     list: List,
     sheet: Sheet,
-    close: Close
+    close: Close,
+    chevronLeft: ChevronLeft,
 }
 
 type IconType = typeof icons;
