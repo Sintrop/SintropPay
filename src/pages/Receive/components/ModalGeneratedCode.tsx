@@ -43,13 +43,13 @@ export function ModalGeneratedCode({close, paymentCode}: Props) {
                 </button>
 
                 <p className="text-white font-bold mt-10">Wallet de destino:</p>
-                <p className="text-white mb-3">{walletConnected}</p>
+                <p className="text-white mb-3 truncate">{walletConnected}</p>
 
                 <p className="text-white font-bold">Valor:</p>
                 <p className="text-white mb-3">{paymentData?.originalValue} {paymentData?.calculationCurrency}</p>
 
                 <p className="text-white font-bold">Conversão:</p>
-                <p className="text-white mb-3">{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 2}).format(paymentData?.valueTransfer)} {paymentData?.criptoTransfer}</p>
+                <p className="text-white mb-3">{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 5}).format(paymentData?.valueTransfer)} {paymentData?.criptoTransfer}</p>
 
                 <div className="mt-5 items-center flex flex-col">
                     <button

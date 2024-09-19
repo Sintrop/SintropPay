@@ -33,7 +33,7 @@ export function Receive() {
         // Estrutura do código de pagamento
         // [WalletDestino]-[ValorParaTransferir]-[MoedaDeTransferência]-[ValorOriginal]-[MoedaDeCalculo]-[CotaçaoNoMomento];
 
-        const code = `${walletConnected}-${totalReceive}-RC-${saleValue}-${unit}-${RC_TO_BRL}`;
+        const code = `${walletConnected}-${String(totalReceive).replace(',', '.')}-RC-${saleValue}-${unit}-${RC_TO_BRL}`;
 
         setPaymentCode(code);
         setModalGenerated(true)

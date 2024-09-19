@@ -22,15 +22,10 @@ interface ErrTransactionProps{
 export async function SendTransaction({value, walletFrom, walletTo}: SendTransactionProps): Promise<ReturnTransactionProps>{
     let success = false;
     let transactionHash = '';
-    let message = '';
+    let message = 'error';
     let code = 0;
-    console.log(value)
+    
     const valueWei = web3.utils.toWei(String(value), 'ether');
-    console.log(valueWei)
-    // const valueBigInt = web3.utils.toBigInt(valueWei);
-    // console.log(valueBigInt)
-
-    //const valueWei = Number(value).toFixed(0) + '000000000000000000';
 
     try{
         await RCTokenContract.methods.transfer(walletTo, valueWei).send({from: walletFrom})
