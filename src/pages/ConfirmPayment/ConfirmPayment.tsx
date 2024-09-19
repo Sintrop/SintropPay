@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PaymentDataProps, SplitPaymentCode } from "../../services/PaymentCode";
 import { LoadingTransaction } from "../../components/LoadingTransaction/LoadingTransaction";
 import { useMainContext } from "../../hooks/useMainContext";
+import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
 
 export function ConfirmPayment(){
     const {walletConnected} = useMainContext();
@@ -31,7 +32,10 @@ export function ConfirmPayment(){
     return(
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col h-full w-full pb-20 lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg overflow-y-auto overflow-x-hidden">
-                <h1 className="text-white font-bold text-5xl my-10">Revise os dados</h1>
+            <div className='flex items-center gap-2 my-10'>
+                    <GoBackButton/>
+                    <h1 className="text-white font-bold text-2xl">Revise os dados</h1>
+                </div>
 
                 <div className="flex flex-col w-full p-3 rounded-md bg-container-primary">
                     <p className="text-white font-bold">Destinatário:</p>
@@ -41,7 +45,7 @@ export function ConfirmPayment(){
                     <p className="text-white mb-3">{paymentData?.criptoTransfer}</p>
 
                     <p className="text-white font-bold">Valor:</p>
-                    <p className="text-white mb-3">{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 2}).format(paymentData?.valueTransfer)} {paymentData?.criptoTransfer}</p>
+                    <p className="text-white mb-3">{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 5}).format(paymentData?.valueTransfer)} {paymentData?.criptoTransfer}</p>
 
                     <p className="text-white font-bold">Valor original:</p>
                     <p className="text-white mb-3">{paymentData?.originalValue} {paymentData?.calculationCurrency}</p>

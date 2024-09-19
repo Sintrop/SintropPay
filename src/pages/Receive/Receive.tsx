@@ -3,6 +3,7 @@ import TokenImg from '../../assets/img/token.png';
 import { ModalGeneratedCode } from './components/ModalGeneratedCode';
 import { useMainContext } from '../../hooks/useMainContext';
 import { useNavigate } from 'react-router-dom';
+import { GoBackButton } from '../../components/GoBackButton/GoBackButton';
 
 export function Receive() {
     const navigate = useNavigate();
@@ -42,7 +43,11 @@ export function Receive() {
     return (
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col h-full w-full lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg overflow-y-auto">
-                <h1 className="text-white font-bold text-5xl my-10">Receber</h1>
+                <div className='flex items-center gap-2 my-10'>
+                    <GoBackButton/>
+                    <h1 className="text-white font-bold text-2xl">Vender/Receber</h1>
+                </div>
+                
 
                 <div className="flex flex-col gap-1 w-full p-3 rounded-md bg-container-primary">
                     <p className="text-white">Você vai receber em:</p>

@@ -3,34 +3,38 @@ import { useNavigate } from "react-router-dom";
 import { useMainContext } from "../../hooks/useMainContext";
 import { TransactionProps, GetTransactionsUser } from "../../services/GetTransactionsUser";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
+import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
 
-export function Transactions(){
+export function Transactions() {
     const navigate = useNavigate();
-    const {walletConnected} = useMainContext();
+    const { walletConnected } = useMainContext();
     const [transactions, setTransactions] = useState<TransactionProps[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if(walletConnected === ''){
-            navigate('/', {replace: true})
+        if (walletConnected === '') {
+            navigate('/', { replace: true })
         }
 
-        if(walletConnected !== ''){
+        if (walletConnected !== '') {
             getTransactions();
         }
     }, [walletConnected]);
 
-    async function getTransactions(){
+    async function getTransactions() {
         setLoading(true);
         const response = await GetTransactionsUser(walletConnected);
         setTransactions(response);
         setLoading(false);
     }
 
-    return(
+    return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col h-full w-full lg:max-w-[420px] overflow-y-auto px-3 lg:border-2 border-white rounded-lg">
-                <h1 className="text-white font-bold text-5xl my-10">Suas transações</h1>
+                <div className='flex items-center gap-2 my-10'>
+                    <GoBackButton />
+                    <h1 className="text-white font-bold text-2xl">Suas transações</h1>
+                </div>
 
                 <div className="flex flex-col gap-3 mt-10 pb-10">
                     {loading && (

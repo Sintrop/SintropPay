@@ -2,16 +2,17 @@ import { useState, useEffect } from "react"
 import { ModalScanQR } from "./components/ModalScanQR/ModalScanQR";
 import { useNavigate } from "react-router-dom";
 import { useMainContext } from "../../hooks/useMainContext";
+import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
 
 export function Send() {
     const navigate = useNavigate();
-    const {walletConnected} = useMainContext();
+    const { walletConnected } = useMainContext();
     const [ler, setLer] = useState(false);
     const [paymentCode, setPaymentCode] = useState('');
 
     useEffect(() => {
-        if(walletConnected === ''){
-            navigate('/', {replace: true})
+        if (walletConnected === '') {
+            navigate('/', { replace: true })
         }
     }, [walletConnected]);
 
@@ -22,7 +23,10 @@ export function Send() {
     return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
             <div className="flex flex-col h-full w-full lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg overflow-y-auto">
-                <h1 className="text-white font-bold text-5xl my-10">Pagar</h1>
+                <div className='flex items-center gap-2 my-10'>
+                    <GoBackButton />
+                    <h1 className="text-white font-bold text-2xl">Pagar/Enviar</h1>
+                </div>
 
                 <div className="flex flex-col gap-1 w-full p-3 rounded-md bg-container-primary">
                     <div className='flex flex-col gap-1 w-full'>

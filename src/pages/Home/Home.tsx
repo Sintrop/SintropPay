@@ -80,7 +80,7 @@ export function Home() {
                     >
                         <Icon name="house" size={30}/>
 
-                        <p className="text-white">Vender produto/serviço</p>
+                        <p className="text-white">Vender/Receber</p>
                     </Link>
                     <Link
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
@@ -88,7 +88,7 @@ export function Home() {
                     >
                         <Icon name="cart" size={30}/>
 
-                        <p className="text-white">Comprar produto/serviço</p>
+                        <p className="text-white">Pagar/Enviar</p>
                     </Link>
 
                     <Link
