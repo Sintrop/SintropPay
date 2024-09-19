@@ -31,7 +31,7 @@ export function TransactionItem({ data }: Props) {
                 {format(new Date(Number(data?.timeStamp) * 1000), 'dd/MM/yyyy - kk:mm')}
             </p>
             <div className="flex items-center gap-5 w-full mt-2">
-                <Icon name={revenue ? 'arrowUp' : 'arrowDown'} color={revenue ? 'green' : 'red'}/>
+                <Icon name={revenue ? 'arrowDown': 'arrowUp'} color={revenue ? 'green' : 'red'}/>
 
                 <div className="flex flex-col w-[85%]">
                     <p className="font-bold text-white text-sm">

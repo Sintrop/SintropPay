@@ -2,32 +2,22 @@ import { Link, useNavigate } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
 import { useMainContext } from "../../hooks/useMainContext";
 import { useEffect, useState } from "react";
-import { GetTransactionsUser, TransactionProps } from "../../services/GetTransactionsUser";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
 import { Icon } from "../../components/Icon/Icon";
 
 export function Home() {
     const navigate = useNavigate();
-    const {walletConnected, balanceUser} = useMainContext();
+    const {walletConnected, balanceUser, transactions} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
-    const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
     useEffect(() => {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
-        if(walletConnected !== ''){
-            getTransactions();
-        }
     }, [walletConnected]);
 
     function toggleVisibilityBalance(){
         setVisibleBalance(oldValue => !oldValue);
-    }
-
-    async function getTransactions(){
-        const response = await GetTransactionsUser(walletConnected);
-        setTransactions(response);
     }
 
     return (
@@ -42,10 +32,10 @@ export function Home() {
                     <div className="flex items-center w-full justify-between">
                         <p className="text-white text-lg">Meu patrimônio em</p>
                         <button
-                            className="w-5 h-5 bg-red-500"
+                            className="p-2"
                             onClick={toggleVisibilityBalance}
                         >
-
+                            <Icon name="eyeOff" size={20}/>
                         </button>
                     </div>
 
