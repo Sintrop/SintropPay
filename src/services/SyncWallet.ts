@@ -7,7 +7,7 @@ declare global{
     }
 }
 
-export async function SyncWallet(): Promise<string[]>{
+export async function SyncWallet(){
     if(window.ethereum){
         try{
             const addresses = window?.ethereum.request({
