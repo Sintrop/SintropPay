@@ -4,6 +4,7 @@ import { ModalGeneratedCode } from './components/ModalGeneratedCode';
 import { useMainContext } from '../../hooks/useMainContext';
 import { useNavigate } from 'react-router-dom';
 import { GoBackButton } from '../../components/GoBackButton/GoBackButton';
+import { toast } from 'react-toastify';
 
 export function Receive() {
     const navigate = useNavigate();
@@ -31,6 +32,10 @@ export function Receive() {
     }, [saleValue]);
 
     function generatePaymentCode(){
+        if(totalReceive === 0){
+            toast.error('Digite um valor para receber')
+            return;
+        }
         // Estrutura do código de pagamento
         // [WalletDestino]-[ValorParaTransferir]-[MoedaDeTransferência]-[ValorOriginal]-[MoedaDeCalculo]-[CotaçaoNoMomento];
 
@@ -89,7 +94,7 @@ export function Receive() {
 
                     <div className='flex items-center justify-between mt-5'>
                         <p className='text-white font-bold'>Total a receber</p>
-                        <p className='font-bold text-green-primary text-xl'>{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 2}).format(totalReceive)} RC</p>
+                        <p className='font-bold text-green-primary text-xl'>{Intl.NumberFormat('pt-BR', {maximumFractionDigits: 5}).format(totalReceive)} RC</p>
                     </div>
 
                     <button
