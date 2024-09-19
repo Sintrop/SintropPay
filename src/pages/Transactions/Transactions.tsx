@@ -29,7 +29,7 @@ export function Transactions(){
 
     return(
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
-            <div className="flex flex-col h-full w-full lg:max-w-[420px] overflow-y-auto px-3 border-2 border-white rounded-lg">
+            <div className="flex flex-col h-full w-full lg:max-w-[420px] overflow-y-auto px-3 lg:border-2 border-white rounded-lg">
                 <h1 className="text-white font-bold text-5xl my-10">Suas transações</h1>
 
                 <div className="flex flex-col gap-3 mt-10 pb-10">

@@ -30,7 +30,7 @@ export function ConfirmPayment(){
 
     return(
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
-            <div className="flex flex-col h-full w-full lg:max-w-[420px] px-3 border-2 border-white rounded-lg overflow-y-auto overflow-x-hidden">
+            <div className="flex flex-col h-full w-full lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg overflow-y-auto overflow-x-hidden">
                 <h1 className="text-white font-bold text-5xl my-10">Revise os dados</h1>
 
                 <div className="flex flex-col w-full p-3 rounded-md bg-container-primary">

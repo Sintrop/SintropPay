@@ -32,7 +32,7 @@ export function Home() {
 
     return (
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">
-            <div className="flex flex-col w-full lg:max-w-[420px] pb-20 px-3 border-2 border-white rounded-lg overflow-x-hidden">
+            <div className="flex flex-col w-full lg:max-w-[420px] pb-20 px-3 lg:border-2 border-white rounded-lg overflow-x-hidden">
 
                 <h1 className="text-white font-bold text-5xl mb-14 mt-10">Sintrop Pay</h1>
 

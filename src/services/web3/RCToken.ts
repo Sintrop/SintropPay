@@ -24,9 +24,12 @@ export async function SendTransaction({value, walletFrom, walletTo}: SendTransac
     let transactionHash = '';
     let message = '';
     let code = 0;
+    
+    const valueWei = web3.utils.toWei(value as number, 'ether');
+    const valueBigInt = web3.utils.toBigInt(valueWei);
 
     try{
-        await RCTokenContract.methods.transfer(walletTo, web3.utils.toWei(value as number, 'ether')).send({from: walletFrom})
+        await RCTokenContract.methods.transfer(walletTo, valueBigInt).send({from: walletFrom})
         .on("confirmation", (receipt) =>
             console.log(receipt)
         )

@@ -18,7 +18,7 @@ export function Sync() {
 
     return (
         <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-t from-[#1F5D38] to-[#043832]">
-            <div className="flex flex-col items-center justify-center h-full w-full lg:max-w-[420px] px-3 border-2 border-white rounded-lg">
+            <div className="flex flex-col items-center justify-center h-full w-full lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg">
 
                 <div className="flex items-center justify-center gap-5">
                     <img
