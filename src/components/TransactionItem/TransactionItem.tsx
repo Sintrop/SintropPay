@@ -3,6 +3,7 @@ import { TransactionProps } from "../../services/GetTransactionsUser"
 import { useMainContext } from "../../hooks/useMainContext";
 import { web3 } from "../../services/web3/Contracts";
 import { format } from "date-fns";
+import { Icon } from "../Icon/Icon";
 
 interface Props {
     data: TransactionProps;
@@ -30,9 +31,7 @@ export function TransactionItem({ data }: Props) {
                 {format(new Date(Number(data?.timeStamp) * 1000), 'dd/MM/yyyy - kk:mm')}
             </p>
             <div className="flex items-center gap-5 w-full mt-2">
-                <div className="w-5 h-5 bg-red-500">
-
-                </div>
+                <Icon name={revenue ? 'arrowUp' : 'arrowDown'}/>
 
                 <div className="flex flex-col w-[85%]">
                     <p className="font-bold text-white text-sm">

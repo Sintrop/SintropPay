@@ -4,6 +4,7 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { useEffect, useState } from "react";
 import { GetTransactionsUser, TransactionProps } from "../../services/GetTransactionsUser";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
+import { Icon } from "../../components/Icon/Icon";
 
 export function Home() {
     const navigate = useNavigate();
@@ -77,7 +78,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/receive'
                     >
-                        <div className="w-10 h-10 bg-red-400" />
+                        <Icon name="house" size={30}/>
 
                         <p className="text-white">Vender produto/serviço</p>
                     </Link>
@@ -85,7 +86,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/send'
                     >
-                        <div className="w-10 h-10 bg-red-400" />
+                        <Icon name="cart" size={30}/>
 
                         <p className="text-white">Comprar produto/serviço</p>
                     </Link>
@@ -94,7 +95,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/transactions'
                     >
-                        <div className="w-10 h-10 bg-red-400" />
+                        <Icon name="sheet" size={30}/>
 
                         <p className="text-white">Extrato</p>
                     </Link>
