@@ -3,12 +3,15 @@ import { ModalScanQR } from "./components/ModalScanQR/ModalScanQR";
 import { useNavigate } from "react-router-dom";
 import { useMainContext } from "../../hooks/useMainContext";
 import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
+import { useValidityPaymentCode } from "../../hooks/useValidityPaymentCode";
+import { toast } from "react-toastify";
 
 export function Send() {
     const navigate = useNavigate();
     const { walletConnected } = useMainContext();
     const [ler, setLer] = useState(false);
     const [paymentCode, setPaymentCode] = useState('');
+    const codeValid = useValidityPaymentCode(paymentCode);
 
     useEffect(() => {
         if (walletConnected === '') {
@@ -17,6 +20,10 @@ export function Send() {
     }, [walletConnected]);
 
     function handleNavigateToConfirm(paymentCode: string) {
+        if(!codeValid){
+            toast.error('Código de pagamento inválido!')
+            return;
+        }
         navigate(`/confirm-payment/${paymentCode}`);
     }
 
@@ -39,10 +46,14 @@ export function Send() {
                             placeholder='Digite aqui'
                         />
 
+                        {!codeValid && (
+                            <p className="text-red-500">Código inválido</p>
+                        )}
+
                         <div className="flex justify-end w-full mt-2">
                             {paymentCode.trim() && (
                                 <button
-                                    className="bg-blue-primary w-[160px] h-10 items-center justify-center font-bold text-white rounded-md mb-10"
+                                    className={`bg-blue-primary w-[160px] h-10 items-center justify-center font-bold text-white rounded-md mb-10 ${codeValid ? 'opacity-100' : 'opacity-40'}`}
                                     onClick={() => handleNavigateToConfirm(paymentCode)}
                                 >
                                     Continuar
