@@ -7,7 +7,7 @@ import { Icon } from "../../components/Icon/Icon";
 
 export function Home() {
     const navigate = useNavigate();
-    const {walletConnected, balanceUser, transactions} = useMainContext();
+    const {walletConnected, balanceUser, transactions, disconnect} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
 
     useEffect(() => {
@@ -24,7 +24,18 @@ export function Home() {
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">
             <div className="flex flex-col w-full lg:max-w-[420px] pb-20 px-3 lg:border-2 border-white rounded-lg overflow-x-hidden">
 
-                <h1 className="text-white font-bold text-5xl mb-14 mt-10">Sintrop Pay</h1>
+                <h1 className="text-white font-bold text-5xl my-10">Sintrop Pay</h1>
+
+                <div className="flex flex-col gap-1 mb-5">
+                    <h3 className="font-bold text-white text-2xl">Olá</h3>
+                    <p className="text-white text-sm text-truncate">{walletConnected}</p>
+                    <button
+                        className="font-bold text-red-400 text-start"
+                        onClick={disconnect}
+                    >
+                        Desconectar wallet
+                    </button>
+                </div>
 
                 <div
                     className="bg-container-primary rounded-md px-5 py-3 flex flex-col w-[320px]"
@@ -55,11 +66,6 @@ export function Home() {
                             '*************'
                         )}
                     </p>
-                </div>
-
-                <div className="flex flex-col gap-2 mt-10">
-                    <h3 className="font-bold text-white text-2xl">Olá</h3>
-                    <p className="text-white text-sm text-truncate">{walletConnected}</p>
                 </div>
 
                 <div className="flex flex-col gap-3 mt-5">

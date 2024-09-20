@@ -12,6 +12,7 @@ export interface MainContextProps {
     syncWallet: () => Promise<ReturnSyncWalletProps>;
     balanceUser: string;
     transactions: TransactionProps[];
+    disconnect: () => void;
 }
 
 interface MainProviderProps {
@@ -57,13 +58,18 @@ export function MainContextProvider({ children }: MainProviderProps) {
         };
     }
 
+    function disconnect(){
+        setWalletConnected('');
+    }
+
     return (
         <MainContext.Provider
             value={{
                 walletConnected,
                 syncWallet,
                 balanceUser,
-                transactions
+                transactions,
+                disconnect
             }}
         >
             {children}
