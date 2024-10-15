@@ -1,4 +1,4 @@
-import { web3 } from "../services/web3/Contracts";
+import { web3 } from "../services/web3/V7/Contracts";
 
 export function useValidityPaymentCode(paymentCode: string): boolean{
     if(!paymentCode.trim()){

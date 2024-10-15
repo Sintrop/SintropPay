@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMainContext } from "../../hooks/useMainContext";
-import { ReturnTransactionProps, SendTransaction } from "../../services/web3/RCToken";
+import { BurnTokensWithNewService, ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
+import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -10,15 +11,16 @@ interface TransactionDataProps {
 interface Props {
     close: () => void;
     success: () => void;
-    typeTransaction: 'payment' | 'teste';
-    transactionData: TransactionDataProps;
+    typeTransaction: 'payment' | 'checkout';
+    transactionData?: TransactionDataProps;
+    transactionCheckoutData?: TransactionCheckoutProps;
 }
 
-export function LoadingTransaction({ close, success, typeTransaction, transactionData }: Props) {
+export function LoadingTransaction({ close, success, typeTransaction, transactionData, transactionCheckoutData }: Props) {
     const { walletConnected } = useMainContext();
     const [loading, setLoading] = useState(false);
     const [transactionSuccessfully, setTransactionSuccessfully] = useState(false);
-    const [errTransactionData, setErrTransactionData] = useState({} as ReturnTransactionProps);
+    const [returnTransactionData, setReturnTransactionData] = useState({} as ReturnTransactionProps);
 
     useEffect(() => {
         setLoading(true);
@@ -34,6 +36,12 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         if (typeTransaction === 'payment') {
             handleSendTransaction();
         }
+
+        if(typeTransaction === 'checkout'){
+            if(transactionCheckoutData?.type === 'burn-tokens'){
+                burnTokens();
+            }
+        }
     }
 
     async function handleSendTransaction() {
@@ -43,7 +51,7 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             walletFrom: walletConnected
         });
 
-        setErrTransactionData(response);
+        setReturnTransactionData(response);
 
         if (response.success) {
             setLoading(false)
@@ -53,6 +61,21 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         }
 
         setLoading(false);
+    }
+
+    async function burnTokens(){
+        if(transactionCheckoutData?.additionalData){
+            const additionalData = JSON.parse(transactionCheckoutData?.additionalData)
+
+            const response = await BurnTokensWithNewService(additionalData?.value, walletConnected);
+            setReturnTransactionData(response);
+
+            if(response.success){
+                setTransactionSuccessfully(true);
+            }
+
+            setLoading(false);
+        }
     }
 
     return (
@@ -76,10 +99,10 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
                                     <p className="text-white text-sm font-bold">Hash da transação</p>
                                     <a
                                         className="text-sm text-white underline"
-                                        href={`https://sepolia.etherscan.io/tx/${errTransactionData?.transactionHash}`}
+                                        href={`https://sepolia.etherscan.io/tx/${returnTransactionData?.transactionHash}`}
                                         target="_blank"
                                     >
-                                        {errTransactionData?.transactionHash}
+                                        {returnTransactionData?.transactionHash}
                                     </a>
 
                                     <p className="text-white text-sm font-bold mt-5">Destinatário</p>
@@ -95,12 +118,12 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
                             </>
                         ) : (
                             <>
-                                {errTransactionData.message && (
+                                {returnTransactionData.message && (
                                     <>
                                         <p className="font-bold text-white text-xl text-center">Algo deu errado com sua transação</p>
                                         <p className="mt-20 text-xs text-gray-400 text-center">Erro</p>
-                                        <p className="text-white">Code: {errTransactionData?.code}</p>
-                                        <p className="text-white text-center">Mensagem: {errTransactionData?.message.replace('Returned error:', '')}</p>
+                                        <p className="text-white">Code: {returnTransactionData?.code}</p>
+                                        <p className="text-white text-center">Mensagem: {returnTransactionData?.message.replace('Returned error:', '')}</p>
 
                                         <button
                                             onClick={close}

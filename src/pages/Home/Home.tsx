@@ -96,14 +96,14 @@ export function Home() {
                         <p className="text-white">Extrato</p>
                     </Link>
 
-                    {/* <Link
+                    <Link
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
-                        to='/send'
+                        to='/checkout-rc'
                     >
                         <div className="w-10 h-10 bg-red-400" />
 
-                        <p className="text-white">Checkout</p>
-                    </Link> */}
+                        <p className="text-white">Checkout Crédito de Regeneração</p>
+                    </Link>
                 </div>
 
                 <p className="text-gray-300 text-xs text-center mt-7">Últimas movimentações</p>

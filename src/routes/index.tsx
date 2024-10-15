@@ -5,6 +5,7 @@ import { Sync } from "../pages/Sync/Sync";
 import { Receive } from "../pages/Receive/Receive";
 import { ConfirmPayment } from "../pages/ConfirmPayment/ConfirmPayment";
 import { Transactions } from "../pages/Transactions/Transactions";
+import { CheckoutRC } from "../pages/CheckoutRC/CheckoutRC";
 
 export const router = createBrowserRouter([
     {
@@ -30,5 +31,9 @@ export const router = createBrowserRouter([
     {
         path: '/transactions',
         Component: Transactions
+    },
+    {
+        path: '/checkout-rc',
+        Component: CheckoutRC
     },
 ])

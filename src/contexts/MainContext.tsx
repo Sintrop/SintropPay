@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { SyncWallet } from "../services/SyncWallet";
-import { GetBalanceRC } from "../services/web3/RCToken";
+import { GetBalanceRC } from "../services/web3/V7/RCToken";
 import { GetTransactionsUser, TransactionProps } from "../services/GetTransactionsUser";
 
 interface ReturnSyncWalletProps {
