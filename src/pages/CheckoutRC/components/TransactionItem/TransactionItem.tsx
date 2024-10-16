@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { TransactionCheckoutProps } from "../../../../interfaces/transactionsCheckout"
 import { LoadingTransaction } from "../../../../components/LoadingTransaction/LoadingTransaction";
+import { toast } from "react-toastify";
 
 interface Props {
     transaction: TransactionCheckoutProps;
+    reloadTransactions: () => void;
 }
-export function TransactionItem({ transaction }: Props) {
+export function TransactionItem({ transaction, reloadTransactions }: Props) {
     const [loadingTransaction, setLoadingTransaction] = useState(false);
     
     async function handleFinishTransaction() {
@@ -40,8 +42,14 @@ export function TransactionItem({ transaction }: Props) {
             //invalidateUser();
         }
         if (transaction?.type === 'invite-user') {
-            //inviteUser();
+            setLoadingTransaction(true);
         }
+    }
+
+    function transactionSuccess(){
+        toast.success('Transação realizada com sucesso!');
+        setLoadingTransaction(false);
+        reloadTransactions();
     }
 
     return (
@@ -73,7 +81,7 @@ export function TransactionItem({ transaction }: Props) {
             {loadingTransaction && (
                 <LoadingTransaction
                     close={() => setLoadingTransaction(false)}
-                    success={() => {setLoadingTransaction(false)}}
+                    success={transactionSuccess}
                     typeTransaction="checkout"
                     transactionCheckoutData={transaction}
                 />

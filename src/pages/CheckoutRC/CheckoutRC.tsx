@@ -39,6 +39,7 @@ export function CheckoutRC() {
                         <TransactionItem
                             key={item.id}
                             transaction={item}
+                            reloadTransactions={handleGetTransactions}
                         />
                     ))}
                 </div>

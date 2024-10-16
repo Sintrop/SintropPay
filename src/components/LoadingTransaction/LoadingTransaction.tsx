@@ -3,6 +3,7 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { BurnTokens, ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { executeBurnTokens } from "../../services/checkout/burnTokens";
+import { executeInvite } from "../../services/checkout/invite";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -42,6 +43,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             if (transactionCheckoutData?.type === 'burn-tokens') {
                 handleBurnTokens();
             }
+            if (transactionCheckoutData?.type === 'invite-user') {
+                handleInviteUser();
+            }
         }
     }
 
@@ -57,6 +61,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
     async function handleBurnTokens() {
         if (transactionCheckoutData) {
             const response = await executeBurnTokens({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response);
+        }
+    }
+
+    async function handleInviteUser(){
+        if(transactionCheckoutData){
+            const response = await executeInvite({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response);
         }
     }
