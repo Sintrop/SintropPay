@@ -2,8 +2,6 @@ import { web3RequestWrite } from "../requestService";
 import { RCTokenContract } from "./Contracts";
 import { web3 } from './Contracts';
 
-
-
 export interface ReturnTransactionProps {
     transactionHash: string;
     success: boolean;
@@ -73,52 +71,7 @@ export async function GetBalanceRC(address: string): Promise<string> {
 }
 
 export async function BurnTokens(value: number, wallet: string): Promise<ReturnTransactionProps> {
-    let success = false;
-    let transactionHash = '';
-    let message = 'error';
-    let code = 0;
-
-    const valueWei = web3.utils.toWei(String(value), 'ether');
-
-    try {
-        await RCTokenContract.methods.burnTokens(valueWei).send({ from: wallet })
-            .on('transactionHash', hash => {
-                success = true;
-                transactionHash = hash;
-                message = 'transaction successfully'
-            })
-            .on("error", (err) => {
-                console.log(err.message)
-            })
-
-        return {
-            success,
-            transactionHash,
-            message,
-            code,
-        }
-    } catch (e) {
-        const error = e as ErrTransactionProps;
-        message = error.message;
-        code = error.code;
-
-        return {
-            success,
-            transactionHash,
-            message,
-            code
-        }
-    }
-}
-
-export async function BurnTokensWithNewService(value: number, wallet: string): Promise<ReturnTransactionProps> {
     const valueWei = web3.utils.toWei(String(value), 'ether');
     const response = await web3RequestWrite(RCTokenContract, 'burnTokens', [valueWei], wallet);
-
-    return {
-        success: response.success,
-        transactionHash: response.transactionHash,
-        message: response.message,
-        code: response.code,
-    }
+    return response;
 }

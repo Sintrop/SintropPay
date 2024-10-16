@@ -73,7 +73,7 @@ export function TransactionItem({ transaction }: Props) {
             {loadingTransaction && (
                 <LoadingTransaction
                     close={() => setLoadingTransaction(false)}
-                    success={() => {alert('ok')}}
+                    success={() => {setLoadingTransaction(false)}}
                     typeTransaction="checkout"
                     transactionCheckoutData={transaction}
                 />

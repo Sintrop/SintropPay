@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useMainContext } from "../../hooks/useMainContext";
-import { BurnTokensWithNewService, ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
+import { BurnTokens, ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
+import { executeBurnTokens } from "../../services/checkout/burnTokens";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -37,9 +38,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             handleSendTransaction();
         }
 
-        if(typeTransaction === 'checkout'){
-            if(transactionCheckoutData?.type === 'burn-tokens'){
-                burnTokens();
+        if (typeTransaction === 'checkout') {
+            if (transactionCheckoutData?.type === 'burn-tokens') {
+                handleBurnTokens();
             }
         }
     }
@@ -50,32 +51,22 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             walletTo: transactionData?.walletTo,
             walletFrom: walletConnected
         });
-
-        setReturnTransactionData(response);
-
-        if (response.success) {
-            setLoading(false)
-            setTransactionSuccessfully(true);
-
-            return;
-        }
-
-        setLoading(false);
+        finishRequestWeb3(response);
     }
 
-    async function burnTokens(){
-        if(transactionCheckoutData?.additionalData){
-            const additionalData = JSON.parse(transactionCheckoutData?.additionalData)
-
-            const response = await BurnTokensWithNewService(additionalData?.value, walletConnected);
-            setReturnTransactionData(response);
-
-            if(response.success){
-                setTransactionSuccessfully(true);
-            }
-
-            setLoading(false);
+    async function handleBurnTokens() {
+        if (transactionCheckoutData) {
+            const response = await executeBurnTokens({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response);
         }
+    }
+
+    function finishRequestWeb3(response: ReturnTransactionProps) {
+        setReturnTransactionData(response);
+        if (response.success) {
+            setTransactionSuccessfully(true);
+        }
+        setLoading(false);
     }
 
     return (
