@@ -4,6 +4,7 @@ import { BurnTokens, ReturnTransactionProps, SendTransaction } from "../../servi
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { executeBurnTokens } from "../../services/checkout/burnTokens";
 import { executeInvite } from "../../services/checkout/invite";
+import { executeRequestInspection } from "../../services/checkout/requestInspection";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -46,6 +47,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             if (transactionCheckoutData?.type === 'invite-user') {
                 handleInviteUser();
             }
+            if (transactionCheckoutData?.type === 'request-inspection') {
+                handleRequestInspection();
+            }
         }
     }
 
@@ -68,6 +72,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
     async function handleInviteUser(){
         if(transactionCheckoutData){
             const response = await executeInvite({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response);
+        }
+    }
+
+    async function handleRequestInspection(){
+        if(transactionCheckoutData){
+            const response = await executeRequestInspection({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response);
         }
     }

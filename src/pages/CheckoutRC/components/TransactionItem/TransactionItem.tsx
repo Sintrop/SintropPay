@@ -21,7 +21,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
             //finishNewVersion();
         }
         if (transaction?.type === 'request-inspection') {
-           // requestInspection();
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'buy-tokens') {
             //buyTokens();
