@@ -1,8 +1,12 @@
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
-import { UserApiProps } from "../../interfaces/user";
 import { api } from "../api";
+import { addActivist } from "../web3/V7/Activist";
+import { addDeveloper } from "../web3/V7/Developer";
+import { addInspector } from "../web3/V7/Inspector";
 import { ReturnTransactionProps } from "../web3/V7/RCToken";
+import { addResearcher } from "../web3/V7/Researcher";
 import { addSupporter } from "../web3/V7/Supporter";
+import { addValidator } from "../web3/V7/Validator";
 import { createPubliFeed } from "./publicationFeed";
 import { finishTransaction } from "./transactions";
 import { getUserApi } from "./userApi";
@@ -17,26 +21,136 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
 
     const responseUser = await getUserApi(walletConnected);
     const user = responseUser.user;
+    if(!user.name && user.userType !== 8){
+        return {
+            code: 0,
+            message: 'not user selected',
+            success: false,
+            transactionHash: ''
+        }
+    }
 
-    if(user.userType === 7){
-        const responseWeb3 = await addSupporter({
+    if(user.userType === 2){
+        const responseAddInspector = await addInspector({
             name: user.name,
+            proofPhoto: user.imgProfileUrl,
             walletConnected,
         });
 
-        if(responseWeb3.success){
+        if(responseAddInspector.success){
             await afterRegisterBlockchain({
-                transactionHash: responseWeb3.transactionHash,
+                transactionHash: responseAddInspector.transactionHash,
                 transactionId: transactionCheckoutData.id,
                 userId: user.id,
                 walletConnected
             });
 
-            return responseWeb3;
+            return responseAddInspector;
         }else{
-            return responseWeb3;
+            return responseAddInspector;
         }
     }
+
+    if(user.userType === 3){
+        const responseAddResearcher = await addResearcher({
+            name: user.name,
+            proofPhoto: user.imgProfileUrl,
+            walletConnected,
+        });
+
+        if(responseAddResearcher.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddResearcher.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddResearcher;
+        }else{
+            return responseAddResearcher;
+        }
+    }
+
+    if(user.userType === 4){
+        const responseAddDeveloper = await addDeveloper({
+            name: user.name,
+            proofPhoto: user.imgProfileUrl,
+            walletConnected,
+        });
+
+        if(responseAddDeveloper.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddDeveloper.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddDeveloper;
+        }else{
+            return responseAddDeveloper;
+        }
+    }
+
+    if(user.userType === 6){
+        const responseAddActivist = await addActivist({
+            name: user.name,
+            proofPhoto: user.imgProfileUrl,
+            walletConnected,
+        });
+
+        if(responseAddActivist.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddActivist.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddActivist;
+        }else{
+            return responseAddActivist;
+        }
+    }
+
+    if(user.userType === 7){
+        const responseAddSupporter = await addSupporter({
+            name: user.name,
+            walletConnected,
+        });
+
+        if(responseAddSupporter.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddSupporter.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddSupporter;
+        }else{
+            return responseAddSupporter;
+        }
+    }
+
+    if(user.userType === 8){
+        const responseAddValidator = await addValidator(walletConnected);
+
+        if(responseAddValidator.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddValidator.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddValidator;
+        }else{
+            return responseAddValidator;
+        }
+    }
+
 
     return {
         code: 0,
