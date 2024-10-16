@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useMainContext } from "../../hooks/useMainContext";
-import { BurnTokens, ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
+import { ReturnTransactionProps, SendTransaction } from "../../services/web3/V7/RCToken";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { executeBurnTokens } from "../../services/checkout/burnTokens";
 import { executeInvite } from "../../services/checkout/invite";
 import { executeRequestInspection } from "../../services/checkout/requestInspection";
 import { executeRegisterUser } from "../../services/checkout/registerUser";
 import { executeWithdraw } from "../../services/checkout/withdrawTokens";
+import { executeAddValidationInspection } from "../../services/checkout/addValidationInspection";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -58,6 +59,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             if (transactionCheckoutData?.type === 'withdraw-tokens') {
                 handleWithdrawTokens();
             }
+            if (transactionCheckoutData?.type === 'invalidate-inspection') {
+                handleInvalidateInspection();
+            }
         }
     }
 
@@ -102,6 +106,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         if(transactionCheckoutData){
             const response = await executeWithdraw({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response);
+        }
+    }
+
+    async function handleInvalidateInspection(){
+        if(transactionCheckoutData){
+            const response = await executeAddValidationInspection({transactionCheckoutData, walletConnected});
+            return response;
         }
     }
 

@@ -10,3 +10,14 @@ export async function requestInspection(props: RequestInspectionProps): Promise<
     const response = await web3RequestWrite(SintropContract, 'requestInspection', [], walletConnected);
     return response
 }
+
+interface AddInspectionValidationProps{
+    inspectionId: number;
+    justification: string;
+    walletConnected: string;
+}
+export async function addInspectionValidation(props: AddInspectionValidationProps): Promise<ReturnTransactionProps>{
+    const {inspectionId, justification, walletConnected} = props;
+    const response = await web3RequestWrite(SintropContract, 'addInspectionValidation', [inspectionId, justification], walletConnected);
+    return response;
+}

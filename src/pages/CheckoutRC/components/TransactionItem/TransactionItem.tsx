@@ -30,7 +30,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
             setLoadingTransaction(true);
         }
         if (transaction?.type === 'invalidate-inspection') {
-            //invalidateInspection();
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'dev-report') {
             //sendDevReport();
