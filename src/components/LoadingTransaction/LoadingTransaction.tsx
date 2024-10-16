@@ -5,6 +5,7 @@ import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout"
 import { executeBurnTokens } from "../../services/checkout/burnTokens";
 import { executeInvite } from "../../services/checkout/invite";
 import { executeRequestInspection } from "../../services/checkout/requestInspection";
+import { executeRegisterUser } from "../../services/checkout/registerUser";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -50,6 +51,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             if (transactionCheckoutData?.type === 'request-inspection') {
                 handleRequestInspection();
             }
+            if (transactionCheckoutData?.type === 'register') {
+                handleRegisterUser();
+            }
         }
     }
 
@@ -80,6 +84,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         if(transactionCheckoutData){
             const response = await executeRequestInspection({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response);
+        }
+    }
+
+    async function handleRegisterUser(){
+        if(transactionCheckoutData){
+            const response = await executeRegisterUser({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response)
         }
     }
 

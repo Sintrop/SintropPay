@@ -8,3 +8,13 @@ export async function BurnTokens(value: number, wallet: string): Promise<ReturnT
     const response = await web3RequestWrite(SupporterContract, 'burnTokens', [valueWei], wallet);
     return response;
 }
+
+interface AddSupporterProps{
+    walletConnected: string;
+    name: string;
+}
+export async function addSupporter(props: AddSupporterProps): Promise<ReturnTransactionProps>{
+    const {name, walletConnected} = props;
+    const response = await web3RequestWrite(SupporterContract, 'addSupporter', [name], walletConnected);
+    return response;
+}

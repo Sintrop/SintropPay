@@ -12,7 +12,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
     
     async function handleFinishTransaction() {
         if (transaction?.type === 'register') {
-            //register();
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'accept-inspection') {
             //acceptInspection()
