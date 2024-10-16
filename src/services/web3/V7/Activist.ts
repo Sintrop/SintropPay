@@ -12,3 +12,8 @@ export async function addActivist(props: AddActivistProps): Promise<ReturnTransa
     const response = await web3RequestWrite(ActivistContract, 'addActivist', [name, proofPhoto], walletConnected);
     return response;
 }
+
+export async function withdraw(walletConnected: string): Promise<ReturnTransactionProps>{
+    const response = await web3RequestWrite(ActivistContract, 'withdraw', [], walletConnected);
+    return response;
+}

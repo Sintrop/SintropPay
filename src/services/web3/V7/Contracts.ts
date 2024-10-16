@@ -8,6 +8,7 @@ import ActivistContractJson from '../../../data/abis/V7/ActivistContract.json';
 import DeveloperContractJson from '../../../data/abis/V7/DeveloperContract.json';
 import InspectorContractJson from '../../../data/abis/V7/InspectorContract.json';
 import ResearcherContractJson from '../../../data/abis/V7/ResearcherContract.json';
+import ProducerContractJson from '../../../data/abis/V7/ProducerContract.json';
 
 export const RCTokenAddress = '0xA173e03178E984bbA7913eE9C3664dDF9763f736';
 export const supporterContractAddress = '0xf7fDF0b7A6fA93fAeCc9ff825da36E1AaDc681DA';
@@ -34,3 +35,4 @@ export const ActivistContract = new web3.eth.Contract(ActivistContractJson, acti
 export const InspectorContract = new web3.eth.Contract(InspectorContractJson, inspectorContractAddress);
 export const DeveloperContract = new web3.eth.Contract(DeveloperContractJson, developerContractAddress);
 export const ResearcherContract = new web3.eth.Contract(ResearcherContractJson, researcherContractAddress);
+export const ProducerContract = new web3.eth.Contract(ProducerContractJson, producerContractAddress);

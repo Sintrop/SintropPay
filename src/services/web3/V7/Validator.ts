@@ -6,3 +6,8 @@ export async function addValidator(walletConnected: string): Promise<ReturnTrans
     const response = await web3RequestWrite(ValidatorContract, 'addValidator', [], walletConnected);
     return response;
 }
+
+export async function withdraw(walletConnected: string): Promise<ReturnTransactionProps>{
+    const response = await web3RequestWrite(ValidatorContract, 'withdraw', [], walletConnected);
+    return response;
+}

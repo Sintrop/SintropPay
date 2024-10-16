@@ -36,7 +36,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
             //sendDevReport();
         }
         if (transaction?.type === 'withdraw-tokens') {
-            //withdraw();
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'invalidate-user') {
             //invalidateUser();

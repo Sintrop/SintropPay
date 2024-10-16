@@ -12,3 +12,8 @@ export async function addDeveloper(props: AddDeveloperProps): Promise<ReturnTran
     const response = await web3RequestWrite(DeveloperContract, 'addDeveloper', [name, proofPhoto], walletConnected);
     return response;
 }
+
+export async function withdraw(walletConnected: string): Promise<ReturnTransactionProps>{
+    const response = await web3RequestWrite(DeveloperContract, 'withdraw', [], walletConnected);
+    return response;
+}
