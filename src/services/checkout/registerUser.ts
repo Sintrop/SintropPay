@@ -1,6 +1,7 @@
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { AddressProps, UserApiProps } from "../../interfaces/user";
 import { api } from "../api";
+import { saveToIpfs } from "../ipfsInfura";
 import { addActivist } from "../web3/V7/Activist";
 import { addDeveloper } from "../web3/V7/Developer";
 import { addInspector } from "../web3/V7/Inspector";
@@ -217,7 +218,10 @@ async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promi
 
     const addressData = JSON.parse(userData.address);
     const reportAddress = await pdfMake.createPdf(generateAddressReport({addressData, userData, walletConnected}));
-    reportAddress.open();
+    reportAddress.getBuffer(async (res) => {
+        const hashReport = await saveToIpfs(res);
+        console.log(hashReport);
+    })
 
     return {
         success: false,
