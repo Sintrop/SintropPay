@@ -219,7 +219,6 @@ async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promi
 
     const addressData = JSON.parse(userData.address);
     const reportAddress = await pdfMake.createPdf(generateAddressReport({addressData, userData, walletConnected}));
-    reportAddress.open()
     reportAddress.getBuffer(async (res) => {
         const hashReport = await saveToIpfs(res);
         console.log(hashReport);
