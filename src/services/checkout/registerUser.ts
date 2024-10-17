@@ -12,10 +12,9 @@ import { addValidator } from "../web3/V7/Validator";
 import { createPubliFeed } from "./publicationFeed";
 import { finishTransaction } from "./transactions";
 import { getUserApi } from "./userApi";
-import * as pdfMake from "pdfmake/build/pdfmake";
+import pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 interface ExecuteRegisterUserProps {
