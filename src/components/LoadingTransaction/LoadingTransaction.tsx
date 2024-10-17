@@ -8,6 +8,7 @@ import { executeRequestInspection } from "../../services/checkout/requestInspect
 import { executeRegisterUser } from "../../services/checkout/registerUser";
 import { executeWithdraw } from "../../services/checkout/withdrawTokens";
 import { executeAddValidationInspection } from "../../services/checkout/addValidationInspection";
+import { executeAcceptInspection } from "../../services/checkout/acceptInspection";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -62,6 +63,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             if (transactionCheckoutData?.type === 'invalidate-inspection') {
                 handleInvalidateInspection();
             }
+            if (transactionCheckoutData?.type === 'accept-inspection') {
+                handleAcceptInspection();
+            }
         }
     }
 
@@ -113,6 +117,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         if(transactionCheckoutData){
             const response = await executeAddValidationInspection({transactionCheckoutData, walletConnected});
             return response;
+        }
+    }
+
+    async function handleAcceptInspection(){
+        if(transactionCheckoutData){
+            const response = await executeAcceptInspection({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response);
         }
     }
 

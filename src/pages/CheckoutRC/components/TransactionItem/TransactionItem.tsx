@@ -15,7 +15,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
             setLoadingTransaction(true);
         }
         if (transaction?.type === 'accept-inspection') {
-            //acceptInspection()
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'realize-inspection') {
             //finishNewVersion();

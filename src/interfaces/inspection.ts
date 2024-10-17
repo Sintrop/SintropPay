@@ -13,3 +13,18 @@ export interface InspectionWeb3Props{
     validationsCount: number;
     report: string;
 }
+
+interface PathZoneProps{
+    lat: number;
+    lng: number;
+}
+interface PointsToSortZoneProps{
+    latitude: number;
+    longitude: number;
+}
+export interface ZoneProps{
+    title: string;
+    path: PathZoneProps[];
+    areaZone: number;
+    pointsToSort: PointsToSortZoneProps[]
+}
