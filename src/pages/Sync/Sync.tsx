@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from '../../assets/img/logo.png';
 
 export function Sync() {
+    console.log(import.meta.env.ETHERSCAN_API_KEY)
     const navigate = useNavigate();
     const {syncWallet} = useMainContext();
 

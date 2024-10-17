@@ -1,18 +1,19 @@
 import { create } from "ipfs-http-client";
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat';
 import { toString } from 'uint8arrays/to-string';
+import { encode } from "base-64";
 
 const projectId = import.meta.env.PROJECT_ID_INFURA;
 const projectSecret = import.meta.env.PROJECT_SECRET_INFURA;
 
-const auth = "Basic " + projectId + ":" + projectSecret;
+const authString = "Basic " + encode(projectId + ":" + projectSecret);
 
 const client = create({
     host: "ipfs.infura.io",
     port: 5001,
     protocol: "https",
     headers: {
-        authorization: auth,
+        authorization: authString,
     },
 });
 
