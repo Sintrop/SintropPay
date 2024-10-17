@@ -110,12 +110,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
         if(responseUser.success){
             if(user.userType === 1){
                 const addressData = JSON.parse(user.address);
-                console.log('criando pdf')
+                //@ts-ignore
                 pdfMake.createPdf(contentAddressReport({ addressData, userData: user, walletConnected })).getBuffer()
+                //@ts-ignore
                 .then(res => {
                     console.log(res);
                 })
-                .catch(err => {
+                .catch((err: any) => {
                     console.log(err)
                 })
                 
