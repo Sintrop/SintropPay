@@ -8,6 +8,19 @@ export async function withdraw(walletConnected: string): Promise<ReturnTransacti
     return response;
 }
 
+interface AddProducerProps{
+    walletConnected: string;
+    totalArea: number;
+    name: string;
+    proofPhoto: string;
+    reportAddress: string;
+}
+export async function addProducer(props: AddProducerProps): Promise<ReturnTransactionProps>{
+    const {name, proofPhoto, reportAddress, totalArea, walletConnected} = props;
+    const response = await web3RequestWrite(ProducerContract, 'addProducer', [totalArea, name, proofPhoto, reportAddress], walletConnected);
+    return response;
+}
+
 export async function getProducer(wallet: string){
     let producer = {} as ProducerProps;
     const producerResponseWeb3 = await ProducerContract.methods.getProducer(wallet).call();

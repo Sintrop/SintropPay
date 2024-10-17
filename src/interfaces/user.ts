@@ -7,6 +7,17 @@ export interface UserApiProps {
     address: string;
     propertyGeolocation: string
     zones: string;
+    geoLocation: string;
+}
+
+export interface AddressProps {
+    zipCode: string;
+    state: string;
+    city: string;
+    complement: string;
+    street: string;
+    country: string;
+    areaProperty: number;
 }
 
 export interface ProducerProps {
