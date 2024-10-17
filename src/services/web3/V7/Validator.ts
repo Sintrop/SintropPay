@@ -11,3 +11,14 @@ export async function withdraw(walletConnected: string): Promise<ReturnTransacti
     const response = await web3RequestWrite(ValidatorContract, 'withdraw', [], walletConnected);
     return response;
 }
+
+interface AddValidationProps{
+    walletConnected: string;
+    walletToVote: string;
+    justification: string;
+}
+export async function addValidation(props: AddValidationProps): Promise<ReturnTransactionProps>{
+    const {justification, walletConnected, walletToVote} = props;
+    const response = await web3RequestWrite(ValidatorContract, 'addValidation', [walletToVote, justification], walletConnected);
+    return response;
+}
