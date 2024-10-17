@@ -13,8 +13,9 @@ import { createPubliFeed } from "./publicationFeed";
 import { finishTransaction } from "./transactions";
 import { getUserApi } from "./userApi";
 import pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).addVirtualFileSystem(pdfFonts);
+
 
 
 interface ExecuteRegisterUserProps {

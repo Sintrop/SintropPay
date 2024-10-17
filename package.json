@@ -15,7 +15,7 @@
     "base-64": "^1.0.0",
     "date-fns": "^4.1.0",
     "ipfs-http-client": "^60.0.1",
-    "pdfmake": "^0.2.14",
+    "pdfmake": "^0.3.0-beta.11",
     "qr-scanner": "^1.4.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
