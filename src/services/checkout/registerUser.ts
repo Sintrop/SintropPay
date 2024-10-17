@@ -1,7 +1,6 @@
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { AddressProps, UserApiProps } from "../../interfaces/user";
 import { api } from "../api";
-import { saveToIpfs } from "../ipfsInfura";
 import { addActivist } from "../web3/V7/Activist";
 import { addDeveloper } from "../web3/V7/Developer";
 import { addInspector } from "../web3/V7/Inspector";
@@ -16,19 +15,17 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
-
-
 interface ExecuteRegisterUserProps {
     transactionCheckoutData: TransactionCheckoutProps;
     walletConnected: string;
 }
 
-export async function executeRegisterUser(props: ExecuteRegisterUserProps): Promise<ReturnTransactionProps>{
-    const {transactionCheckoutData, walletConnected} = props;
+export async function executeRegisterUser(props: ExecuteRegisterUserProps): Promise<ReturnTransactionProps> {
+    const { transactionCheckoutData, walletConnected } = props;
 
     const responseUser = await getUserApi(walletConnected);
     const user = responseUser.user;
-    if(!user.name && user.userType !== 8){
+    if (!user.name && user.userType !== 8) {
         return {
             code: 0,
             message: 'not user selected',
@@ -37,8 +34,8 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
         }
     }
 
-    if(user.userType === 1){
-        const responseBeforeRegister = await beforeProducerRegister({userData: user, walletConnected});
+    if (user.userType === 1) {
+        const responseBeforeRegister = await beforeProducerRegister({ userData: user, walletConnected });
         console.log(responseBeforeRegister);
 
         return {
@@ -50,14 +47,14 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
 
     }
 
-    if(user.userType === 2){
+    if (user.userType === 2) {
         const responseAddInspector = await addInspector({
             name: user.name,
             proofPhoto: user.imgProfileUrl,
             walletConnected,
         });
 
-        if(responseAddInspector.success){
+        if (responseAddInspector.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddInspector.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -66,19 +63,19 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddInspector;
-        }else{
+        } else {
             return responseAddInspector;
         }
     }
 
-    if(user.userType === 3){
+    if (user.userType === 3) {
         const responseAddResearcher = await addResearcher({
             name: user.name,
             proofPhoto: user.imgProfileUrl,
             walletConnected,
         });
 
-        if(responseAddResearcher.success){
+        if (responseAddResearcher.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddResearcher.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -87,19 +84,19 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddResearcher;
-        }else{
+        } else {
             return responseAddResearcher;
         }
     }
 
-    if(user.userType === 4){
+    if (user.userType === 4) {
         const responseAddDeveloper = await addDeveloper({
             name: user.name,
             proofPhoto: user.imgProfileUrl,
             walletConnected,
         });
 
-        if(responseAddDeveloper.success){
+        if (responseAddDeveloper.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddDeveloper.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -108,19 +105,19 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddDeveloper;
-        }else{
+        } else {
             return responseAddDeveloper;
         }
     }
 
-    if(user.userType === 6){
+    if (user.userType === 6) {
         const responseAddActivist = await addActivist({
             name: user.name,
             proofPhoto: user.imgProfileUrl,
             walletConnected,
         });
 
-        if(responseAddActivist.success){
+        if (responseAddActivist.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddActivist.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -129,18 +126,18 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddActivist;
-        }else{
+        } else {
             return responseAddActivist;
         }
     }
 
-    if(user.userType === 7){
+    if (user.userType === 7) {
         const responseAddSupporter = await addSupporter({
             name: user.name,
             walletConnected,
         });
 
-        if(responseAddSupporter.success){
+        if (responseAddSupporter.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddSupporter.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -149,15 +146,15 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddSupporter;
-        }else{
+        } else {
             return responseAddSupporter;
         }
     }
 
-    if(user.userType === 8){
+    if (user.userType === 8) {
         const responseAddValidator = await addValidator(walletConnected);
 
-        if(responseAddValidator.success){
+        if (responseAddValidator.success) {
             await afterRegisterBlockchain({
                 transactionHash: responseAddValidator.transactionHash,
                 transactionId: transactionCheckoutData.id,
@@ -166,7 +163,7 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
             });
 
             return responseAddValidator;
-        }else{
+        } else {
             return responseAddValidator;
         }
     }
@@ -180,65 +177,74 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
     }
 }
 
-interface AfterRegisterBlockchainProps{
+interface AfterRegisterBlockchainProps {
     walletConnected: string;
     transactionId: string;
     transactionHash: string;
     userId: string;
 }
-async function afterRegisterBlockchain(props: AfterRegisterBlockchainProps){
-    const {transactionHash, transactionId, userId, walletConnected} = props;
+async function afterRegisterBlockchain(props: AfterRegisterBlockchainProps) {
+    const { transactionHash, transactionId, userId, walletConnected } = props;
 
     await updateAccountStatus(walletConnected);
     await finishTransaction(transactionId);
     await createPubliFeed({
         type: 'new-user',
         userId,
-        additionalData: JSON.stringify({hash: transactionHash}),
+        additionalData: JSON.stringify({ hash: transactionHash }),
     })
 }
 
-async function updateAccountStatus(walletConnected: string){
-    try{
+async function updateAccountStatus(walletConnected: string) {
+    try {
         await api.put('/user/account-status', { userWallet: walletConnected, status: 'blockchain' })
-    }catch(e){
+    } catch (e) {
         console.log('error on update account status');
     }
 }
 
-interface BeforeProducerRegisterProps{
+interface BeforeProducerRegisterProps {
     walletConnected: string;
     userData: UserApiProps;
 }
-interface ReturnBeforeProducerRegisterProps{
+interface ReturnBeforeProducerRegisterProps {
     success: boolean;
     message?: string;
     reportAddressHash: string;
 }
-async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promise<ReturnBeforeProducerRegisterProps>{
-    const {userData, walletConnected} = props;
-
-    const addressData = JSON.parse(userData.address);
-    const reportAddress = await pdfMake.createPdf(generateAddressReport({addressData, userData, walletConnected}));
-    reportAddress.open();
-    reportAddress.getBuffer(async (res) => {
-        const hashReport = await saveToIpfs(res);
-        console.log(hashReport);
-    })
-
-    return {
+async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promise<ReturnBeforeProducerRegisterProps> {
+    const { userData, walletConnected } = props;
+    console.log(userData);
+    console.log(walletConnected);
+    
+    return{
+        reportAddressHash: '',
         success: false,
-        reportAddressHash: ''
     }
 }
 
-interface GenerateAddressReportProps{
-    addressData: AddressProps, 
+// interface CreatePdfProps{
+//     walletConnected: string;
+//     userData: UserApiProps;
+// }
+// async function createPdf({userData, walletConnected}: CreatePdfProps){
+//     const addressData = JSON.parse(userData.address);
+//     console.log('creating pdf')
+//     return new Promise(function (resolve) {
+//         pdfMake.createPdf(contentAddressReport({ addressData, userData, walletConnected }))
+//         .getBlob((res) => {
+//             resolve(res)
+//         })
+//     })
+// }
+
+interface ContentAddressReportProps {
+    addressData: AddressProps,
     walletConnected: string;
     userData: UserApiProps;
 }
-function generateAddressReport(props: GenerateAddressReportProps) {
-    const {addressData, userData, walletConnected} = props;
+export function contentAddressReport(props: ContentAddressReportProps) {
+    const { addressData, userData, walletConnected } = props;
     const location = JSON.parse(userData?.geoLocation);
     const propertyPath = JSON.parse(userData?.propertyGeolocation);
 
@@ -282,7 +288,7 @@ function generateAddressReport(props: GenerateAddressReportProps) {
                         text: 'Área da propriedade: ',
                         style: 'label'
                     },
-                    `${Intl.NumberFormat('pt-BR', {maximumFractionDigits: 0}).format(addressData?.areaProperty)} m²`
+                    `${Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 }).format(addressData?.areaProperty)} m²`
                 ]
             },
             {
