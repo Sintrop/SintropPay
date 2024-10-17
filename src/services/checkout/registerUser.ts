@@ -12,9 +12,10 @@ import { addValidator } from "../web3/V7/Validator";
 import { createPubliFeed } from "./publicationFeed";
 import { finishTransaction } from "./transactions";
 import { getUserApi } from "./userApi";
-import pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 
 interface ExecuteRegisterUserProps {
@@ -219,6 +220,7 @@ async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promi
 
     const addressData = JSON.parse(userData.address);
     const reportAddress = await pdfMake.createPdf(generateAddressReport({addressData, userData, walletConnected}));
+    reportAddress.open();
     reportAddress.getBuffer(async (res) => {
         const hashReport = await saveToIpfs(res);
         console.log(hashReport);
