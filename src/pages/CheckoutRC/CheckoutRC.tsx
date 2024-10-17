@@ -35,6 +35,10 @@ export function CheckoutRC() {
                 </div>
 
                 <div className="flex flex-col mt-5 gap-3">
+                    {loading && (
+                        <div></div>
+                    )}
+
                     {transactions.map(item => (
                         <TransactionItem
                             key={item.id}
