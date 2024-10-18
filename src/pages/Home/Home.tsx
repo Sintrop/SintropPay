@@ -4,20 +4,32 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { useEffect, useState } from "react";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
 import { Icon } from "../../components/Icon/Icon";
+import { getTransactionsCheckout } from "../../services/checkout/transactions";
+import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
+import { TransactionCheckoutItem } from "../CheckoutRC/components/TransactionCheckoutItem/TransactionCheckoutItem";
 
 export function Home() {
     const navigate = useNavigate();
     const {walletConnected, balanceUser, transactions, disconnect} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
+    const [openTransactions, setOpenTransactions] = useState<TransactionCheckoutProps[]>([]);
 
     useEffect(() => {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
+        getOpenTransactions();
     }, [walletConnected]);
 
     function toggleVisibilityBalance(){
         setVisibleBalance(oldValue => !oldValue);
+    }
+
+    async function getOpenTransactions(){
+        const response = await getTransactionsCheckout(walletConnected);
+        if(response.success){
+            setOpenTransactions(response.openTransactions)
+        }
     }
 
     return (
@@ -105,6 +117,20 @@ export function Home() {
                         <p className="text-white">Checkout Crédito de Regeneração</p>
                     </Link>
                 </div>
+
+                {openTransactions.length > 0 && (
+                    <div className="mt-5">
+                        <p className="text-white text-lg mb-1">Transações em aberto no Checkout do Crédito de Regeneração</p>
+
+                        {openTransactions.map(item => (
+                            <TransactionCheckoutItem
+                                key={item.id}
+                                transaction={item}
+                                reloadTransactions={() => {}}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 <p className="text-gray-300 text-xs text-center mt-7">Últimas movimentações</p>
 

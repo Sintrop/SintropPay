@@ -8,7 +8,7 @@ interface Props {
     transaction: TransactionCheckoutProps;
     reloadTransactions: () => void;
 }
-export function TransactionItem({ transaction, reloadTransactions }: Props) {
+export function TransactionCheckoutItem({ transaction, reloadTransactions }: Props) {
     const [loadingTransaction, setLoadingTransaction] = useState(false);
 
     async function handleFinishTransaction() {
@@ -101,7 +101,7 @@ export function TransactionItem({ transaction, reloadTransactions }: Props) {
     }
 
     return (
-        <div className="w-full flex flex-col justify-between rounded-md bg-container-secondary p-3 h-[170px]">
+        <div className="w-full flex flex-col justify-between rounded-md bg-container-primary p-3 h-[170px]">
             <p className="text-white">
                 Tipo da transação:
                 <span className="font-bold ml-2">

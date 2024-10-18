@@ -3,7 +3,7 @@ import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { getTransactionsCheckout } from "../../services/checkout/transactions";
 import { useMainContext } from "../../hooks/useMainContext";
-import { TransactionItem } from "./components/TransactionItem/TransactionItem";
+import { TransactionCheckoutItem } from "./components/TransactionCheckoutItem/TransactionCheckoutItem";
 
 export function CheckoutRC() {
     const { walletConnected } = useMainContext();
@@ -69,7 +69,7 @@ export function CheckoutRC() {
                                     ) : (
                                         <>
                                             {openTransactions.map(item => (
-                                                <TransactionItem
+                                                <TransactionCheckoutItem
                                                     key={item.id}
                                                     transaction={item}
                                                     reloadTransactions={handleGetTransactions}
@@ -89,7 +89,7 @@ export function CheckoutRC() {
                                     ) : (
                                         <>
                                             {finishedTransactions.map(item => (
-                                                <TransactionItem
+                                                <TransactionCheckoutItem
                                                     key={item.id}
                                                     transaction={item}
                                                     reloadTransactions={handleGetTransactions}
