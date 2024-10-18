@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TransactionProps } from "../../services/GetTransactionsUser"
 import { useMainContext } from "../../hooks/useMainContext";
-import { web3 } from "../../services/web3/Contracts";
+import { web3 } from "../../services/web3/V7/Contracts";
 import { format } from "date-fns";
 import { Icon } from "../Icon/Icon";
 
