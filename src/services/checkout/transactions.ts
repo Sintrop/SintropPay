@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { api } from "../api";
 
@@ -33,5 +34,25 @@ export async function finishTransaction(transactionId: string){
         await api.put('/transactions-open/finish', { id: transactionId });
     }catch(e){
 
+    }
+}
+
+interface ReturnDiscardTransaction{
+    success: boolean;
+}
+export async function discardTransaction(transactionId: string): Promise<ReturnDiscardTransaction>{
+    try{
+        await api.put('/transaction-open/discard', {
+            transactionId,
+        });
+        toast.success('Transação descartada com sucesso!');
+        return {
+            success: true,
+        }
+    }catch(e){
+        toast.error('Erro ao tentar descartar a transação!')
+        return{
+            success: false
+        }
     }
 }

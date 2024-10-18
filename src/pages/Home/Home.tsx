@@ -126,7 +126,7 @@ export function Home() {
                             <TransactionCheckoutItem
                                 key={item.id}
                                 transaction={item}
-                                reloadTransactions={() => {}}
+                                reloadTransactions={getOpenTransactions}
                             />
                         ))}
                     </div>

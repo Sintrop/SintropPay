@@ -3,6 +3,18 @@ import { TransactionCheckoutProps } from "../../../../interfaces/transactionsChe
 import { LoadingTransaction } from "../../../../components/LoadingTransaction/LoadingTransaction";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { discardTransaction } from "@/services/checkout/transactions";
 
 interface Props {
     transaction: TransactionCheckoutProps;
@@ -10,6 +22,7 @@ interface Props {
 }
 export function TransactionCheckoutItem({ transaction, reloadTransactions }: Props) {
     const [loadingTransaction, setLoadingTransaction] = useState(false);
+    const [loadingDiscard, setLoadingDiscard] = useState(false);
 
     async function handleFinishTransaction() {
         if (transaction?.type === 'register') {
@@ -45,6 +58,19 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
         if (transaction?.type === 'invite-user') {
             setLoadingTransaction(true);
         }
+    }
+
+    async function handleDiscardTransaction(){
+        if(loadingDiscard)return;
+
+        setLoadingDiscard(true);
+
+        const response = await discardTransaction(transaction.id);
+        if(response.success){
+            reloadTransactions();
+        }
+
+        setLoadingDiscard(false);
     }
 
     function transactionSuccess() {
@@ -127,11 +153,36 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
                     Finalizar transação
                 </button>
 
-                <button
-                    className="mt-3 text-center flex items-center justify-center w-full font-semibold text-red-500"
-                >
-                    Descartar transação
-                </button>
+                <AlertDialog>
+                    <AlertDialogTrigger 
+                        className="mt-3 w-full flex items-center justify-center text-center h-5 text-red-400 font-semibold"
+                    >
+                        {loadingDiscard ? (
+                            <div className="w-5 h-5 bg-red-500 animate-spin"/>
+                        ): 'Descartar transação'}
+                    </AlertDialogTrigger>
+                    
+                    <AlertDialogContent 
+                        className="bg-container-primary"
+                    >
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-white">Atenção!</AlertDialogTitle>
+                            <AlertDialogDescription className="text-white">
+                                Ao descartar a transação você não conseguirá desfazer essa ação. Deseja descartar?
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction 
+                                className="bg-red-600 text-white"
+                                onClick={handleDiscardTransaction}
+                            >
+                                Descartar transação
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+
             </div>
 
             {loadingTransaction && (
