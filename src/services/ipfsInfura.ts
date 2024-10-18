@@ -3,8 +3,8 @@ import { concat as uint8ArrayConcat } from 'uint8arrays/concat';
 import { toString } from 'uint8arrays/to-string';
 import { encode } from "base-64";
 
-const projectId = import.meta.env.PROJECT_ID_INFURA;
-const projectSecret = import.meta.env.PROJECT_SECRET_INFURA;
+const projectId = import.meta.env.VITE_PROJECT_ID_INFURA;
+const projectSecret = import.meta.env.VITE_PROJECT_SECRET_INFURA;
 
 const authString = "Basic " + encode(projectId + ":" + projectSecret);
 
