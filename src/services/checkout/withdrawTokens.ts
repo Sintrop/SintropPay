@@ -139,7 +139,7 @@ interface AfterWithdrawProps{
 async function afterWithdraw(props: AfterWithdrawProps){
     const {transactionId, userId, transactionHash} = props;
 
-    await finishTransaction(transactionId);
+    await finishTransaction(transactionId, transactionHash);
     await createPubliFeed({
         type: 'withdraw-tokens',
         userId,

@@ -55,7 +55,7 @@ async function afterAcceptInspection(props: AfterAcceptInspection) {
     const { walletConnected, additionalData, transactionId, transactionHash } = props;
 
     await registerInspectionAPI({additionalData, walletConnected})
-    await finishTransaction(transactionId);
+    await finishTransaction(transactionId, transactionHash);
     await createPubliFeed({
         type: 'accept-inspection',
         walletConnected,

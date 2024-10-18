@@ -51,7 +51,7 @@ interface AfterAddValidationProps{
 async function afterAddValidation(props: AfterAddValidationProps){
     const {transactionId, walletConnected, transactionHash, additionalData} = props;
 
-    await finishTransaction(transactionId);
+    await finishTransaction(transactionId, transactionHash);
     await createPubliFeed({
         type: 'vote-invalidate-inspection',
         walletConnected,

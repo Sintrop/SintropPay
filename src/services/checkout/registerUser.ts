@@ -215,7 +215,7 @@ async function afterRegisterBlockchain(props: AfterRegisterBlockchainProps) {
     const { transactionHash, transactionId, userId, walletConnected } = props;
 
     await updateAccountStatus(walletConnected);
-    await finishTransaction(transactionId);
+    await finishTransaction(transactionId, transactionHash);
     await createPubliFeed({
         type: 'new-user',
         userId,

@@ -14,7 +14,7 @@ export async function executeRequestInspection(props: ExecuteRequestInspectionPr
     const responseWeb3 = await requestInspection({walletConnected});
     
     if(responseWeb3.success){
-        await finishTransaction(transactionCheckoutData.id);
+        await finishTransaction(transactionCheckoutData.id, responseWeb3.transactionHash);
         await createPubliFeed({
             type: 'request-inspection',
             additionalData: JSON.stringify({hash: responseWeb3.transactionHash}),

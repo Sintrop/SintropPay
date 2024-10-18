@@ -29,9 +29,9 @@ export async function getTransactionsCheckout(wallet: string): Promise<ReturnGet
     }
 }
 
-export async function finishTransaction(transactionId: string){
+export async function finishTransaction(transactionId: string, transactionHash: string){
     try{
-        await api.put('/transactions-open/finish', { id: transactionId });
+        await api.put('/transactions-open/finish', { id: transactionId, transactionHash });
     }catch(e){
 
     }

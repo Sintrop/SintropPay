@@ -34,7 +34,7 @@ export async function executeInvite(data: ExecuteInviteProps): Promise<ReturnTra
             userType: additionalData?.userType,
         }
 
-        await finishTransaction(transactionCheckoutData.id);
+        await finishTransaction(transactionCheckoutData.id, responseWeb3.transactionHash);
         await createPubliFeed({
             additionalData: JSON.stringify(addDataPubli),
             type: 'invite-wallet',

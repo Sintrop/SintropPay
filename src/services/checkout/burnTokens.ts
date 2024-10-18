@@ -41,7 +41,7 @@ export async function executeBurnTokens({ transactionCheckoutData, walletConnect
     if (user?.userType === 7) {
         const responseWeb3 = await BurnTokensSupporter(additionalData.value, walletConnected);
         if (responseWeb3.success) {
-            await finishTransaction(transactionCheckoutData.id);
+            await finishTransaction(transactionCheckoutData.id, responseWeb3.transactionHash);
             await registerTokensApi(additionalData.value, responseWeb3.transactionHash, walletConnected, user);
             if (additionalData.invoiceData) {
                 await attValuesInvoice(additionalData);
@@ -55,7 +55,7 @@ export async function executeBurnTokens({ transactionCheckoutData, walletConnect
 
     const responseWeb3 = await BurnTokens(additionalData.value, walletConnected);
     if (responseWeb3.success) {
-        await finishTransaction(transactionCheckoutData.id);
+        await finishTransaction(transactionCheckoutData.id, responseWeb3.transactionHash);
         await registerTokensApi(additionalData.value, responseWeb3.transactionHash, walletConnected, user);
         if (additionalData.invoiceData) {
             await attValuesInvoice(additionalData);
