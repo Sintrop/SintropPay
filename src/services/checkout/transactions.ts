@@ -3,21 +3,26 @@ import { api } from "../api";
 
 interface ReturnGetTransactionsCheckoutProps{
     success: boolean;
-    transactions: TransactionCheckoutProps[];
+    openTransactions: TransactionCheckoutProps[];
+    finishedTransactions: TransactionCheckoutProps[];
     message?: string;
 }
 export async function getTransactionsCheckout(wallet: string): Promise<ReturnGetTransactionsCheckoutProps>{
     try{
-        const response = await api.get(`/transactions-open/${wallet}`);
+        const response = await api.get(`/transactions-checkout/${wallet}`);
+        const {openTransactions, finishedTransactions} = response.data;
+
         return{
             success: true,
-            transactions: response.data.transactions,
-            message: 'error'
+            openTransactions,
+            finishedTransactions,
+            message: 'success'
         }
     }catch(e){
         return{
             success: false,
-            transactions: [],
+            openTransactions: [],
+            finishedTransactions: [],
             message: 'error'
         }
     }

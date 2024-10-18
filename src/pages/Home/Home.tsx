@@ -22,7 +22,7 @@ export function Home() {
 
     return (
         <main className="h-screen flex flex-col items-center bg-gradient-to-t from-[#1F5D38] to-[#043832] overflow-y-auto">
-            <div className="flex flex-col w-full lg:max-w-[420px] pb-20 px-3 lg:border-2 border-white rounded-lg overflow-x-hidden">
+            <div className="flex flex-col w-full h-full lg:max-w-[420px] pb-20 px-3 lg:border-2 border-white rounded-lg overflow-x-hidden">
 
                 <h1 className="text-white font-bold text-5xl my-10">Sintrop Pay</h1>
 
@@ -41,7 +41,7 @@ export function Home() {
                     className="bg-container-primary rounded-md px-5 py-3 flex flex-col w-[320px]"
                 >
                     <div className="flex items-center w-full justify-between">
-                        <p className="text-white text-lg">Meu patrimônio em</p>
+                        <p className="text-white text-lg">Seu saldo</p>
                         <button
                             className="p-2"
                             onClick={toggleVisibilityBalance}
@@ -109,12 +109,18 @@ export function Home() {
                 <p className="text-gray-300 text-xs text-center mt-7">Últimas movimentações</p>
 
                 <div className="flex flex-col gap-3 mt-2">
-                    {transactions.slice(0, 5).map(item => (
-                        <TransactionItem
-                            key={item.hash}
-                            data={item}
-                        />
-                    ))}
+                    {transactions.length === 0 ? (
+                        <p className="mt-10 text-center mx-10 text-white">Você não possui nenhuma movimentação!</p>
+                    ) : (
+                        <>
+                            {transactions.slice(0, 5).map(item => (
+                                <TransactionItem
+                                    key={item.hash}
+                                    data={item}
+                                />
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
         </main>

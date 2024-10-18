@@ -6,21 +6,24 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { TransactionItem } from "./components/TransactionItem/TransactionItem";
 
 export function CheckoutRC() {
-    const {walletConnected} = useMainContext();
-    const [transactions, setTransactions] = useState<TransactionCheckoutProps[]>([]);
+    const { walletConnected } = useMainContext();
+    const [openTransactions, setOpenTransactions] = useState<TransactionCheckoutProps[]>([]);
+    const [finishedTransactions, setFinishedTransactions] = useState<TransactionCheckoutProps[]>([]);
     const [loading, setLoading] = useState(false);
+    const [selectedTab, setSelectedTab] = useState('open');
 
     useEffect(() => {
         handleGetTransactions();
     }, []);
 
-    async function handleGetTransactions(){
+    async function handleGetTransactions() {
         setLoading(true);
 
         const response = await getTransactionsCheckout(walletConnected);
-        if(response.success){
-            setTransactions(response.transactions);
-        }else{
+        if (response.success) {
+            setOpenTransactions(response.openTransactions);
+            setFinishedTransactions(response.finishedTransactions);
+        } else {
 
         }
         setLoading(false);
@@ -35,17 +38,69 @@ export function CheckoutRC() {
                 </div>
 
                 <div className="flex flex-col mt-5 gap-3">
-                    {loading && (
-                        <div></div>
-                    )}
+                    <div className="w-full flex justify-center items-center gap-5">
+                        <button
+                            onClick={() => setSelectedTab('open')}
+                            className={`w-[120px] h-10 border-b-2 ${selectedTab === 'open' ? 'border-green-primary text-green-primary' : 'text-white border-transparent'}`}
+                        >
+                            Abertas
+                        </button>
 
-                    {transactions.map(item => (
-                        <TransactionItem
-                            key={item.id}
-                            transaction={item}
-                            reloadTransactions={handleGetTransactions}
-                        />
-                    ))}
+                        <button
+                            onClick={() => setSelectedTab('finished')}
+                            className={`w-[120px] h-10 border-b-2 ${selectedTab === 'finished' ? 'border-green-primary text-green-primary' : 'text-white border-transparent'}`}
+                        >
+                            Finalizadas
+                        </button>
+                    </div>
+
+                    {loading ? (
+                        <div className="flex justify-center mt-5">
+                            <div className="w-10 h-10 bg-green-primary animate-spin" />
+                        </div>
+                    ) : (
+                        <>
+                            {selectedTab === 'open' && (
+                                <>
+                                    {openTransactions.length === 0 ? (
+                                        <p className="text-center text-white mt-10 mx-10">
+                                            Você não possui nenhuma transação em aberto!
+                                        </p>
+                                    ) : (
+                                        <>
+                                            {openTransactions.map(item => (
+                                                <TransactionItem
+                                                    key={item.id}
+                                                    transaction={item}
+                                                    reloadTransactions={handleGetTransactions}
+                                                />
+                                            ))}
+                                        </>
+                                    )}
+                                </>
+                            )}
+
+                            {selectedTab === 'finished' && (
+                                <>
+                                    {finishedTransactions.length === 0 ? (
+                                        <p className="text-center text-white mt-10 mx-10">
+                                            Você não possui nenhuma transação finalizada ou descartada!
+                                        </p>
+                                    ) : (
+                                        <>
+                                            {finishedTransactions.map(item => (
+                                                <TransactionItem
+                                                    key={item.id}
+                                                    transaction={item}
+                                                    reloadTransactions={handleGetTransactions}
+                                                />
+                                            ))}
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </main>

@@ -4,6 +4,8 @@ export interface TransactionCheckoutProps {
     type: string;
     finished: boolean;
     discarded: boolean;
+    transactionHash: string;
     additionalData: string;
     createdAt: string;
+    finishedAt: string;
 }
