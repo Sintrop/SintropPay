@@ -60,13 +60,13 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
         }
     }
 
-    async function handleDiscardTransaction(){
-        if(loadingDiscard)return;
+    async function handleDiscardTransaction() {
+        if (loadingDiscard) return;
 
         setLoadingDiscard(true);
 
         const response = await discardTransaction(transaction.id);
-        if(response.success){
+        if (response.success) {
             reloadTransactions();
         }
 
@@ -113,12 +113,18 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
                         </p>
 
                         {transaction.transactionHash && (
-                            <p className="text-white mt-1">
-                                Hash da transação:
-                                <span className="font-bold ml-2">
-                                    {transaction.transactionHash}
-                                </span>
-                            </p>
+                            <>
+                                <p className="text-white mt-1">
+                                    Dados da transação:
+                                </p>
+                                <a 
+                                    className="text-blue-400 underline font-bold"
+                                    target="_blank"
+                                    href={`https://holesky.etherscan.io/tx/${transaction.transactionHash}`}
+                                >
+                                    Ver no etherscan
+                                </a>
+                            </>
                         )}
                     </>
                 )}
@@ -154,15 +160,15 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
                 </button>
 
                 <AlertDialog>
-                    <AlertDialogTrigger 
+                    <AlertDialogTrigger
                         className="mt-3 w-full flex items-center justify-center text-center h-5 text-red-400 font-semibold"
                     >
                         {loadingDiscard ? (
-                            <div className="w-5 h-5 bg-red-500 animate-spin"/>
-                        ): 'Descartar transação'}
+                            <div className="w-5 h-5 bg-red-500 animate-spin" />
+                        ) : 'Descartar transação'}
                     </AlertDialogTrigger>
-                    
-                    <AlertDialogContent 
+
+                    <AlertDialogContent
                         className="bg-container-primary"
                     >
                         <AlertDialogHeader>
@@ -173,7 +179,7 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction 
+                            <AlertDialogAction
                                 className="bg-red-600 text-white"
                                 onClick={handleDiscardTransaction}
                             >
