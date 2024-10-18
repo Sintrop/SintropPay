@@ -1,9 +1,11 @@
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { AddressProps, UserApiProps } from "../../interfaces/user";
 import { api } from "../api";
+import { saveToIpfs } from "../ipfsInfura";
 import { addActivist } from "../web3/V7/Activist";
 import { addDeveloper } from "../web3/V7/Developer";
 import { addInspector } from "../web3/V7/Inspector";
+import { addProducer } from "../web3/V7/Producer";
 import { ReturnTransactionProps } from "../web3/V7/RCToken";
 import { addResearcher } from "../web3/V7/Researcher";
 import { addSupporter } from "../web3/V7/Supporter";
@@ -36,15 +38,41 @@ export async function executeRegisterUser(props: ExecuteRegisterUserProps): Prom
 
     if (user.userType === 1) {
         const responseBeforeRegister = await beforeProducerRegister({ userData: user, walletConnected });
-        console.log(responseBeforeRegister);
-
-        return {
-            code: 500,
-            message: 'teste register producer',
-            success: false,
-            transactionHash: '',
+        if(!responseBeforeRegister.success){
+            return {
+                code: 500,
+                message: 'error on create address report',
+                success: false,
+                transactionHash: '',
+            }
         }
+        
+        const responseAddProducer = await addProducer({
+            name: user.name,
+            proofPhoto: user.imgProfileUrl,
+            reportAddress: responseBeforeRegister.reportAddressHash,
+            totalArea: responseBeforeRegister.totalArea,
+            walletConnected
+        });
 
+
+        if(responseAddProducer.success){
+            await afterRegisterBlockchain({
+                transactionHash: responseAddProducer.transactionHash,
+                transactionId: transactionCheckoutData.id,
+                userId: user.id,
+                walletConnected
+            });
+
+            return responseAddProducer;
+        }else{
+            return {
+                code: 500,
+                message: 'error on register producer',
+                success: false,
+                transactionHash: '',
+            }
+        }
     }
 
     if (user.userType === 2) {
@@ -211,32 +239,33 @@ interface ReturnBeforeProducerRegisterProps {
     success: boolean;
     message?: string;
     reportAddressHash: string;
+    totalArea: number;
 }
 async function beforeProducerRegister(props: BeforeProducerRegisterProps): Promise<ReturnBeforeProducerRegisterProps> {
     const { userData, walletConnected } = props;
-    console.log(userData);
-    console.log(walletConnected);
-    
-    return{
-        reportAddressHash: '',
-        success: false,
-    }
-}
+    const addressData = JSON.parse(userData.address) as AddressProps;
 
-// interface CreatePdfProps{
-//     walletConnected: string;
-//     userData: UserApiProps;
-// }
-// async function createPdf({userData, walletConnected}: CreatePdfProps){
-//     const addressData = JSON.parse(userData.address);
-//     console.log('creating pdf')
-//     return new Promise(function (resolve) {
-//         pdfMake.createPdf(contentAddressReport({ addressData, userData, walletConnected }))
-//         .getBlob((res) => {
-//             resolve(res)
-//         })
-//     })
-// }
+    let hashReport = '';
+    let success = false;
+    //@ts-ignore
+    await pdfMake.createPdf(contentAddressReport({ addressData, userData, walletConnected })).getBuffer()
+        //@ts-ignore
+        .then(async (res) => {
+            const hash = await saveToIpfs(res);
+            hashReport = hash as string;
+            success = true;
+        })
+        .catch((err: any) => {
+            console.log('error on create pdf')
+            console.log(err);
+        })
+
+        return {
+            reportAddressHash: hashReport,
+            success,
+            totalArea: parseInt(String(addressData.areaProperty))
+        }
+}
 
 interface ContentAddressReportProps {
     addressData: AddressProps,
@@ -285,14 +314,14 @@ export function contentAddressReport(props: ContentAddressReportProps) {
             {
                 text: [
                     {
-                        text: 'Área da propriedade: ',
+                        text: 'Área em certificação: ',
                         style: 'label'
                     },
                     `${Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 }).format(addressData?.areaProperty)} m²`
                 ]
             },
             {
-                text: 'Coordenadas e endereço da propriedade',
+                text: 'Coordenadas e endereço da área em certificação',
                 style: 'title'
             },
             {
@@ -304,7 +333,7 @@ export function contentAddressReport(props: ContentAddressReportProps) {
                 style: 'description'
             },
             {
-                text: 'Coordenadas dos limites da propriedade:',
+                text: 'Coordenadas dos limites da área em certificação:',
                 style: 'label',
             },
             {

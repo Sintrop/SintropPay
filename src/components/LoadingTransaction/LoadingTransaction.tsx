@@ -9,11 +9,7 @@ import { executeRegisterUser } from "../../services/checkout/registerUser";
 import { executeWithdraw } from "../../services/checkout/withdrawTokens";
 import { executeAddValidationInspection } from "../../services/checkout/addValidationInspection";
 import { executeAcceptInspection } from "../../services/checkout/acceptInspection";
-import { getUserApi } from "../../services/checkout/userApi";
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AddressProps, UserApiProps } from "../../interfaces/user";
-(pdfMake as any).addVirtualFileSystem(pdfFonts);
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -105,24 +101,6 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
     }
 
     async function handleRegisterUser(){
-        const responseUser = await getUserApi(walletConnected);
-        const user = responseUser.user
-        if(responseUser.success){
-            if(user.userType === 1){
-                const addressData = JSON.parse(user.address);
-                //@ts-ignore
-                pdfMake.createPdf(contentAddressReport({ addressData, userData: user, walletConnected })).getBuffer()
-                //@ts-ignore
-                .then(res => {
-                    console.log(res);
-                })
-                .catch((err: any) => {
-                    console.log(err)
-                })
-                
-                return;
-            }
-        }
         if(transactionCheckoutData){
             const response = await executeRegisterUser({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response)
