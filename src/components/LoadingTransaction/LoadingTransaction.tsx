@@ -10,6 +10,7 @@ import { executeWithdraw } from "../../services/checkout/withdrawTokens";
 import { executeAddValidationInspection } from "../../services/checkout/addValidationInspection";
 import { executeAcceptInspection } from "../../services/checkout/acceptInspection";
 import { AddressProps, UserApiProps } from "../../interfaces/user";
+import { executeRealizeInspection } from "@/services/checkout/realizeInspection";
 
 interface TransactionDataProps {
     walletTo?: string;
@@ -66,6 +67,9 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
             }
             if (transactionCheckoutData?.type === 'accept-inspection') {
                 handleAcceptInspection();
+            }
+            if (transactionCheckoutData?.type === 'realize-inspection') {
+                handleRealizeInspection();
             }
         }
     }
@@ -124,6 +128,13 @@ export function LoadingTransaction({ close, success, typeTransaction, transactio
     async function handleAcceptInspection(){
         if(transactionCheckoutData){
             const response = await executeAcceptInspection({transactionCheckoutData, walletConnected});
+            finishRequestWeb3(response);
+        }
+    }
+
+    async function handleRealizeInspection(){
+        if(transactionCheckoutData){
+            const response = await executeRealizeInspection({transactionCheckoutData, walletConnected});
             finishRequestWeb3(response);
         }
     }
