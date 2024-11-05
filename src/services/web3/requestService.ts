@@ -18,10 +18,12 @@ export async function web3RequestWrite(
             })
             .on("error", () => {
                 // throw new Web3ErrorService(error, receipt);
-                message = 'Erro ao processar sua transação'
+                success = false;
+                message = 'Erro na sua transação';
             })
     } catch (e) {
-        message = 'Erro ao processar sua transação'
+        message = 'Erro na sua transação';
+        success = false;
     }
 
     return {

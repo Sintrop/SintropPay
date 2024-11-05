@@ -32,7 +32,7 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
             setLoadingTransaction(true);
         }
         if (transaction?.type === 'realize-inspection') {
-            //finishNewVersion();
+            setLoadingTransaction(true);
         }
         if (transaction?.type === 'request-inspection') {
             setLoadingTransaction(true);
