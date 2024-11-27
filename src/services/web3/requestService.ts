@@ -22,6 +22,8 @@ export async function web3RequestWrite(
                 message = 'Erro na sua transação';
             })
     } catch (e) {
+        console.log(e)
+        code = 0;
         message = 'Erro na sua transação';
         success = false;
     }

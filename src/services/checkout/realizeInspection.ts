@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { TransactionCheckoutProps } from "@/interfaces/transactionsCheckout";
 import { ReturnTransactionProps } from "../web3/V7/RCToken";
 import { getInspection, realizeInspection } from "../web3/V7/Sintrop";
@@ -10,6 +11,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { saveToIpfs } from "../ipfsInfura";
 import { finishTransaction } from "./transactions";
 import { createPubliFeed } from "./publicationFeed";
+//@ts-ignore
 (<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
 interface AdditionalDataRealizeInspectionProps {
@@ -40,13 +42,15 @@ export async function executeRealizeInspection(props: ExecuteRealizeInspectionPr
             walletConnected
         });
 
-        await afterRealizeInspection({
-            transactionId: transactionCheckoutData.id,
-            transactionHash: responseWeb3.transactionHash,
-            inspectionId: additionalData.inspectionId,
-            walletConnected,
-            producerWallet: responseBefore.producerWallet
-        })
+        if(responseWeb3.success){
+            await afterRealizeInspection({
+                transactionId: transactionCheckoutData.id,
+                transactionHash: responseWeb3.transactionHash,
+                inspectionId: additionalData.inspectionId,
+                walletConnected,
+                producerWallet: responseBefore.producerWallet
+            })
+        }
 
         return responseWeb3;  
     }else{
@@ -619,25 +623,25 @@ async function createIsas(props: CreateIsasProps): Promise<ReturnCreateIsasProps
     const carbon = {
         categoryId: 1,
         isaIndex: carbonResult,
-        indicator: resultIndices.carbon
+        indicator: Math.floor(resultIndices.carbon)
     }
 
     const bio = {
         categoryId: 2,
         isaIndex: bioResult,
-        indicator: resultIndices.bio
+        indicator: Math.floor(resultIndices.bio)
     }
 
     const water = {
         categoryId: 3,
         isaIndex: waterResult,
-        indicator: resultIndices.water
+        indicator: Math.floor(resultIndices.water)
     }
 
     const solo = {
         categoryId: 4,
         isaIndex: soloResult,
-        indicator: resultIndices.soil
+        indicator: Math.floor(resultIndices.soil)
     }
 
     const arrayIsas = [
@@ -664,7 +668,7 @@ async function updateResultApi(props: UpdateResultApiProps){
             result: result,
         })
     }catch(e){
-
+        console.log(e)
     }
 }
 
@@ -673,41 +677,41 @@ function calculateCarboon(data: ResultIndicesProps) {
     const carbon = data.carbon;
 
     if (carbon < 0) {
-        if (Math.abs(carbon) > 0 && Math.abs(carbon) < 10) {
+        if (Math.abs(carbon) > 0 && Math.abs(carbon) < 10000) {
             result = 6
         }
-        if (Math.abs(carbon) >= 10 && Math.abs(carbon) < 100) {
+        if (Math.abs(carbon) >= 10000 && Math.abs(carbon) < 100000) {
             result = 5
         }
-        if (Math.abs(carbon) >= 100 && Math.abs(carbon) < 1000) {
+        if (Math.abs(carbon) >= 100000 && Math.abs(carbon) < 1000000) {
             result = 4
         }
-        if (Math.abs(carbon) >= 1000 && Math.abs(carbon) < 10000) {
+        if (Math.abs(carbon) >= 1000000 && Math.abs(carbon) < 10000000) {
             result = 3
         }
-        if (Math.abs(carbon) >= 10000 && Math.abs(carbon) < 100000) {
+        if (Math.abs(carbon) >= 10000000 && Math.abs(carbon) < 100000000) {
             result = 2
         }
-        if (Math.abs(carbon) >= 100000) {
+        if (Math.abs(carbon) >= 100000000) {
             result = 1
         }
     }
-    if (carbon >= 100000) {
+    if (carbon >= 100000000) {
         result = 13
     }
-    if (carbon >= 10000 && carbon < 100000) {
+    if (carbon >= 10000000 && carbon < 100000000) {
         result = 12
     }
-    if (carbon >= 1000 && carbon < 10000) {
+    if (carbon >= 1000000 && carbon < 10000000) {
         result = 11
     }
-    if (carbon >= 100 && carbon < 1000) {
+    if (carbon >= 100000 && carbon < 1000000) {
         result = 10
     }
-    if (carbon >= 10 && carbon < 100) {
+    if (carbon >= 10000 && carbon < 100000) {
         result = 9
     }
-    if (carbon > 0 && carbon < 10) {
+    if (carbon > 0 && carbon < 10000) {
         result = 8
     }
     if (carbon === 0) {
