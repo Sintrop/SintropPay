@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: 'https://api-v7-production.up.railway.app',
+    baseURL: 'https://appapiv8.sintrop.com',
     //baseURL: 'http://localhost:3333'
 })
