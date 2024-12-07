@@ -30,7 +30,7 @@
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "uint8arrays": "^5.1.0",
-    "web3": "^4.12.1"
+    "web3": "^4.16.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
