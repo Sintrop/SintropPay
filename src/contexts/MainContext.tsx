@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { SyncWallet } from "../services/SyncWallet";
 import { GetBalanceRC } from "../services/web3/V7/RCToken";
 import { GetTransactionsUser, TransactionProps } from "../services/GetTransactionsUser";
+import { getBalanceSIN } from "@/services/web3/getBalanceSIN";
 
 interface ReturnSyncWalletProps {
     success: boolean;
@@ -11,6 +12,7 @@ export interface MainContextProps {
     walletConnected: string;
     syncWallet: () => Promise<ReturnSyncWalletProps>;
     balanceUser: string;
+    balanceSIN: string;
     transactions: TransactionProps[];
     disconnect: () => void;
 }
@@ -24,18 +26,25 @@ export const MainContext = createContext({} as MainContextProps);
 export function MainContextProvider({ children }: MainProviderProps) {
     const [walletConnected, setWalletConnected] = useState('');
     const [balanceUser, setBalanceUser] = useState('');
+    const [balanceSIN, setBalanceSIN] = useState('');
     const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
     useEffect(() => {
         if (walletConnected !== '') {
             getBalanceRC();
             getTransactions();
+            handleGetBalanceSIN();
         }
     }, [walletConnected]);
 
     async function getBalanceRC() {
         const response = await GetBalanceRC(walletConnected);
         setBalanceUser(response);
+    }
+
+    async function handleGetBalanceSIN() {
+        const response = await getBalanceSIN(walletConnected);
+        setBalanceSIN(response);
     }
 
     async function getTransactions(){
@@ -69,7 +78,8 @@ export function MainContextProvider({ children }: MainProviderProps) {
                 syncWallet,
                 balanceUser,
                 transactions,
-                disconnect
+                disconnect,
+                balanceSIN
             }}
         >
             {children}
