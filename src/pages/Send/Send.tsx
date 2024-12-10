@@ -5,8 +5,10 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
 import { useValidityPaymentCode } from "../../hooks/useValidityPaymentCode";
 import { toast } from "react-toastify";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function Send() {
+    const {isSupported} = useNetwork();
     const navigate = useNavigate();
     const { walletConnected } = useMainContext();
     const [ler, setLer] = useState(false);
@@ -16,6 +18,9 @@ export function Send() {
     useEffect(() => {
         if (walletConnected === '') {
             navigate('/', { replace: true })
+        }
+        if(!isSupported){
+            navigate('/', {replace: true})
         }
     }, [walletConnected]);
 

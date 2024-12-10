@@ -3,14 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { useMainContext } from "../../hooks/useMainContext";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
 import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function Transactions() {
+    const {isSupported} = useNetwork();
     const navigate = useNavigate();
     const { walletConnected, transactions } = useMainContext();
 
     useEffect(() => {
         if (walletConnected === '') {
             navigate('/', { replace: true })
+        }
+        if(!isSupported){
+            navigate('/', {replace: true})
         }
     }, [walletConnected]);
 

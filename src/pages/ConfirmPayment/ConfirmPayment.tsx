@@ -4,8 +4,10 @@ import { PaymentDataProps, SplitPaymentCode } from "../../services/PaymentCode";
 import { LoadingTransaction } from "../../components/LoadingTransaction/LoadingTransaction";
 import { useMainContext } from "../../hooks/useMainContext";
 import { GoBackButton } from "../../components/GoBackButton/GoBackButton";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function ConfirmPayment(){
+    const {isSupported} = useNetwork();
     const {walletConnected} = useMainContext();
     const navigate = useNavigate();
     const {paymentCode} = useParams();
@@ -14,6 +16,9 @@ export function ConfirmPayment(){
 
     useEffect(() => {
         if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+        if(!isSupported){
             navigate('/', {replace: true})
         }
     }, [walletConnected]);

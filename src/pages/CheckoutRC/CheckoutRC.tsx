@@ -4,17 +4,26 @@ import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout"
 import { getTransactionsCheckout } from "../../services/checkout/transactions";
 import { useMainContext } from "../../hooks/useMainContext";
 import { TransactionCheckoutItem } from "./components/TransactionCheckoutItem/TransactionCheckoutItem";
+import { useNavigate } from "react-router-dom";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function CheckoutRC() {
+    const {isSupported} = useNetwork();
     const { walletConnected } = useMainContext();
+    const navigate = useNavigate();
     const [openTransactions, setOpenTransactions] = useState<TransactionCheckoutProps[]>([]);
     const [finishedTransactions, setFinishedTransactions] = useState<TransactionCheckoutProps[]>([]);
     const [loading, setLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState('open');
 
     useEffect(() => {
-        handleGetTransactions();
-    }, []);
+        if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+        if(!isSupported){
+            navigate('/', {replace: true})
+        }
+    }, [walletConnected]);
 
     async function handleGetTransactions() {
         setLoading(true);
@@ -24,7 +33,7 @@ export function CheckoutRC() {
             setOpenTransactions(response.openTransactions);
             setFinishedTransactions(response.finishedTransactions);
         } else {
-
+            console.log(response.success);
         }
         setLoading(false);
     }

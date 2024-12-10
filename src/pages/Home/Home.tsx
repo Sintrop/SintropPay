@@ -7,10 +7,12 @@ import { Icon } from "../../components/Icon/Icon";
 import { getTransactionsCheckout } from "../../services/checkout/transactions";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { TransactionCheckoutItem } from "../CheckoutRC/components/TransactionCheckoutItem/TransactionCheckoutItem";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function Home() {
+    const {isSupported} = useNetwork();
     const navigate = useNavigate();
-    const {walletConnected, balanceUser, transactions, disconnect} = useMainContext();
+    const {walletConnected, balanceUser, balanceSIN, transactions, disconnect} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
     const [openTransactions, setOpenTransactions] = useState<TransactionCheckoutProps[]>([]);
 
@@ -18,8 +20,11 @@ export function Home() {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
+        if(!isSupported){
+            navigate('/', {replace: true})
+        }
         getOpenTransactions();
-    }, [walletConnected]);
+    }, [walletConnected, isSupported]);
 
     function toggleVisibilityBalance(){
         setVisibleBalance(oldValue => !oldValue);
@@ -50,10 +55,10 @@ export function Home() {
                 </div>
 
                 <div
-                    className="bg-container-primary rounded-md px-5 py-3 flex flex-col w-[320px]"
+                    className="bg-container-primary rounded-md px-5 py-3 flex flex-col w-full"
                 >
                     <div className="flex items-center w-full justify-between">
-                        <p className="text-white text-lg">Seu saldo</p>
+                        <p className="text-white text-lg">Seus saldos</p>
                         <button
                             className="p-2"
                             onClick={toggleVisibilityBalance}
@@ -62,22 +67,43 @@ export function Home() {
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-2 my-5">
-                        <img
-                            src={TokenImg}
-                            className="w-10 h-10 object-contain"
-                        />
+                    <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-2 my-5">
+                            <img
+                                src={TokenImg}
+                                className="w-8 h-8 object-contain"
+                            />
 
-                        <p className="text-white text-lg">RC</p>
+                            <p className="text-white text-lg">RC</p>
+                        </div>
+
+                        <p className="font-bold text-white text-xl">
+                            {visibleBalance ? (
+                                Number(balanceUser).toFixed(5)
+                            ) : (
+                                '*************'
+                            )}
+                        </p>
                     </div>
 
-                    <p className="font-bold text-white text-xl">
-                        {visibleBalance ? (
-                            Number(balanceUser).toFixed(5)
-                        ) : (
-                            '*************'
-                        )}
-                    </p>
+                    <div className="flex items-center justify-between w-full border-t border-container-secondary">
+                        <div className="flex items-center gap-2 my-5">
+                            <div
+                                className="w-8 h-8 rounded-full bg-container-secondary"
+                            />
+
+                            <p className="text-white text-lg">SIN</p>
+                        </div>
+
+                        <p className="font-bold text-white text-xl">
+                            {visibleBalance ? (
+                                Number(balanceSIN).toFixed(5)
+                            ) : (
+                                '*************'
+                            )}
+                        </p>
+                    </div>
+
                 </div>
 
                 <div className="flex flex-col gap-3 mt-5">
