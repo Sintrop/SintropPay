@@ -5,8 +5,10 @@ import { useMainContext } from '../../hooks/useMainContext';
 import { useNavigate } from 'react-router-dom';
 import { GoBackButton } from '../../components/GoBackButton/GoBackButton';
 import { toast } from 'react-toastify';
+import { useNetwork } from '@/hooks/useNetwork';
 
 export function Receive() {
+    const {isSupported} = useNetwork();
     const navigate = useNavigate();
     const {walletConnected} = useMainContext();
     const [unit, setUnit] = useState('BRL');
@@ -19,6 +21,9 @@ export function Receive() {
 
     useEffect(() => {
         if(walletConnected === ''){
+            navigate('/', {replace: true})
+        }
+        if(!isSupported){
             navigate('/', {replace: true})
         }
     }, [walletConnected]);

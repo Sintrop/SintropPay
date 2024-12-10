@@ -7,8 +7,10 @@ import { Icon } from "../../components/Icon/Icon";
 import { getTransactionsCheckout } from "../../services/checkout/transactions";
 import { TransactionCheckoutProps } from "../../interfaces/transactionsCheckout";
 import { TransactionCheckoutItem } from "../CheckoutRC/components/TransactionCheckoutItem/TransactionCheckoutItem";
+import { useNetwork } from "@/hooks/useNetwork";
 
 export function Home() {
+    const {isSupported} = useNetwork();
     const navigate = useNavigate();
     const {walletConnected, balanceUser, transactions, disconnect} = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
@@ -18,8 +20,11 @@ export function Home() {
         if(walletConnected === ''){
             navigate('/', {replace: true})
         }
+        if(!isSupported){
+            navigate('/', {replace: true})
+        }
         getOpenTransactions();
-    }, [walletConnected]);
+    }, [walletConnected, isSupported]);
 
     function toggleVisibilityBalance(){
         setVisibleBalance(oldValue => !oldValue);

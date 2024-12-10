@@ -2,9 +2,11 @@ import { toast } from "react-toastify";
 import { useMainContext } from "../../hooks/useMainContext";
 import { useNavigate } from "react-router-dom";
 import Logo from '../../assets/img/logo.png';
+import { useNetwork } from "@/hooks/useNetwork";
+import { UnsupportedNetworkPage } from "../UnsupportedNetworkPage/UnsupportedNetworkPage";
 
 export function Sync() {
-    console.log(import.meta.env.ETHERSCAN_API_KEY)
+    const {isSupported, data} = useNetwork();
     const navigate = useNavigate();
     const {syncWallet} = useMainContext();
 
@@ -15,6 +17,14 @@ export function Sync() {
         }else{
             toast.error('Falha ao tentar sincronizar sua wallet');
         }
+    }
+
+    if(!isSupported){
+        return(
+            <UnsupportedNetworkPage
+                networkName={data}
+            />
+        )
     }
 
     return (
