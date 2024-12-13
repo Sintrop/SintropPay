@@ -607,7 +607,7 @@ interface CreateIsasProps{
 }
 export interface IsaProps{
     categoryId: number; 
-    isaId: number;
+    regenerationIndexId: number;
     indicator: number;
 }
 interface ReturnCreateIsasProps{
@@ -622,33 +622,33 @@ async function createIsas(props: CreateIsasProps): Promise<ReturnCreateIsasProps
 
     const carbon = {
         categoryId: 1,
-        isaIndex: carbonResult,
+        regenerationIndex: carbonResult,
         indicator: Math.floor(resultIndices.carbon)
     }
 
     const bio = {
         categoryId: 2,
-        isaIndex: bioResult,
+        regenerationIndex: bioResult,
         indicator: Math.floor(resultIndices.bio)
     }
 
     const water = {
         categoryId: 3,
-        isaIndex: waterResult,
+        regenerationIndex: waterResult,
         indicator: Math.floor(resultIndices.water)
     }
 
     const solo = {
         categoryId: 4,
-        isaIndex: soloResult,
+        regenerationIndex: soloResult,
         indicator: Math.floor(resultIndices.soil)
     }
 
     const arrayIsas = [
-        { categoryId: carbon.categoryId, isaId: carbon.isaIndex, indicator: carbon.indicator },
-        { categoryId: bio.categoryId, isaId: bio.isaIndex, indicator: bio.indicator },
-        { categoryId: water.categoryId, isaId: water.isaIndex, indicator: water.indicator },
-        { categoryId: solo.categoryId, isaId: solo.isaIndex, indicator: solo.indicator },
+        { categoryId: carbon.categoryId, regenerationIndexId: carbon.regenerationIndex, indicator: carbon.indicator },
+        { categoryId: bio.categoryId, regenerationIndexId: bio.regenerationIndex, indicator: bio.indicator },
+        { categoryId: water.categoryId, regenerationIndexId: water.regenerationIndex, indicator: water.indicator },
+        { categoryId: solo.categoryId, regenerationIndexId: solo.regenerationIndex, indicator: solo.indicator },
     ] as IsaProps[];
 
     return {
