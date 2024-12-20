@@ -48,7 +48,7 @@ export function Receive() {
         // Estrutura do código de pagamento
         // [WalletDestino]-[ValorParaTransferir]-[MoedaDeTransferência]-[ValorOriginal]-[MoedaDeCalculo]-[CotaçaoNoMomento];
 
-        const code = `${walletConnected}-${String(totalReceive).replace(',', '.')}-${tokenReceive}-${saleValue}-${unit}-${RC_TO_BRL}`;
+        const code = `${walletConnected}-${String(totalReceive).replace(',', '.')}-${tokenReceive}-${saleValue}-${unit}-${tokenReceive === 'SIN' ? SIN_TO_BRL : RC_TO_BRL}`;
 
         setPaymentCode(code);
         setModalGenerated(true)
