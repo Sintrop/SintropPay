@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import TokenImg from '../../assets/img/token.png';
+import LogoChain from '../../assets/img/logo-chain.png';
 import { useMainContext } from "../../hooks/useMainContext";
 import { useEffect, useState } from "react";
 import { TransactionItem } from "../../components/TransactionItem/TransactionItem";
@@ -10,29 +11,29 @@ import { TransactionCheckoutItem } from "../CheckoutRC/components/TransactionChe
 import { useNetwork } from "@/hooks/useNetwork";
 
 export function Home() {
-    const {isSupported} = useNetwork();
+    const { isSupported } = useNetwork();
     const navigate = useNavigate();
-    const {walletConnected, balanceUser, balanceSIN, transactions, disconnect} = useMainContext();
+    const { walletConnected, balanceUser, balanceSIN, transactions, disconnect } = useMainContext();
     const [visibleBalance, setVisibleBalance] = useState(false);
     const [openTransactions, setOpenTransactions] = useState<TransactionCheckoutProps[]>([]);
 
     useEffect(() => {
-        if(walletConnected === ''){
-            navigate('/', {replace: true})
+        if (walletConnected === '') {
+            navigate('/', { replace: true })
         }
-        if(!isSupported){
-            navigate('/', {replace: true})
+        if (!isSupported) {
+            navigate('/', { replace: true })
         }
         getOpenTransactions();
     }, [walletConnected, isSupported]);
 
-    function toggleVisibilityBalance(){
+    function toggleVisibilityBalance() {
         setVisibleBalance(oldValue => !oldValue);
     }
 
-    async function getOpenTransactions(){
+    async function getOpenTransactions() {
         const response = await getTransactionsCheckout(walletConnected);
-        if(response.success){
+        if (response.success) {
             setOpenTransactions(response.openTransactions)
         }
     }
@@ -63,7 +64,7 @@ export function Home() {
                             className="p-2"
                             onClick={toggleVisibilityBalance}
                         >
-                            <Icon name="eyeOff" size={20}/>
+                            <Icon name="eyeOff" size={20} />
                         </button>
                     </div>
 
@@ -88,8 +89,9 @@ export function Home() {
 
                     <div className="flex items-center justify-between w-full border-t border-container-secondary">
                         <div className="flex items-center gap-2 my-5">
-                            <div
-                                className="w-8 h-8 rounded-full bg-container-secondary"
+                            <img
+                                src={LogoChain}
+                                className="w-8 h-8 object-contain"
                             />
 
                             <p className="text-white text-lg">SIN</p>
@@ -112,7 +114,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/receive'
                     >
-                        <Icon name="house" size={30}/>
+                        <Icon name="house" size={30} />
 
                         <p className="text-white">Vender/Receber</p>
                     </Link>
@@ -120,7 +122,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/send'
                     >
-                        <Icon name="cart" size={30}/>
+                        <Icon name="cart" size={30} />
 
                         <p className="text-white">Pagar/Enviar</p>
                     </Link>
@@ -129,7 +131,7 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/transactions'
                     >
-                        <Icon name="sheet" size={30}/>
+                        <Icon name="sheet" size={30} />
 
                         <p className="text-white">Extrato</p>
                     </Link>
