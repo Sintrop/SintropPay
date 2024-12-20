@@ -81,7 +81,7 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
 
     if (transaction.finished) {
         return (
-            <div className="w-full flex flex-col justify-between rounded-md bg-container-secondary p-3">
+            <div className="w-full flex flex-col justify-between rounded-md bg-container-secondary p-3 mb-3">
                 <p className="text-white">
                     Tipo da transação:
                     <span className="font-bold ml-2">
@@ -133,7 +133,7 @@ export function TransactionCheckoutItem({ transaction, reloadTransactions }: Pro
     }
 
     return (
-        <div className="w-full flex flex-col justify-between rounded-md bg-container-primary p-3 h-[170px]">
+        <div className="w-full flex flex-col justify-between rounded-md bg-container-primary p-3 h-[170px] mb-3">
             <p className="text-white">
                 Tipo da transação:
                 <span className="font-bold ml-2">

@@ -78,7 +78,8 @@ export function ConfirmPayment(){
                     typeTransaction="payment"
                     transactionData={{
                         value: paymentData.valueTransfer,
-                        walletTo: paymentData.walletToSend
+                        walletTo: paymentData.walletToSend,
+                        tokenTransfer: paymentData.criptoTransfer
                     }}
                 />
             )}

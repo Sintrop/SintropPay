@@ -28,7 +28,9 @@ export function useValidityPaymentCode(paymentCode: string): boolean{
         }
 
         if(criptoTransfer !== 'RC'){
-            return false;
+            if(criptoTransfer !== 'SIN'){
+                return false;
+            }
         }
 
         if(Number(originalValue) <= 0){
