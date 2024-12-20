@@ -43,7 +43,7 @@ export function CheckoutRC() {
             <div className="flex flex-col h-full w-full pb-20 lg:max-w-[420px] px-3 lg:border-2 border-white rounded-lg overflow-y-auto overflow-x-hidden">
                 <div className='flex items-center gap-2 my-10'>
                     <GoBackButton />
-                    <h1 className="text-white font-bold text-2xl">Checkout RC</h1>
+                    <h1 className="text-white font-bold text-2xl">Checkout</h1>
                 </div>
 
                 <div className="flex flex-col mt-5 gap-3">

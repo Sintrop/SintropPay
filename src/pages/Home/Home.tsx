@@ -140,15 +140,15 @@ export function Home() {
                         className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
                         to='/checkout-rc'
                     >
-                        <div className="w-10 h-10 bg-red-400" />
+                        <Icon name='list' size={30}/>
 
-                        <p className="text-white">Checkout Crédito de Regeneração</p>
+                        <p className="text-white">Checkout</p>
                     </Link>
                 </div>
 
                 {openTransactions.length > 0 && (
                     <div className="mt-5">
-                        <p className="text-white text-lg mb-1">Transações em aberto no Checkout do Crédito de Regeneração</p>
+                        <p className="text-white text-lg mb-1">Transações em aberto no checkout</p>
 
                         {openTransactions.map(item => (
                             <TransactionCheckoutItem
