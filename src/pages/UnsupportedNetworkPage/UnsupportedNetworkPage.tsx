@@ -30,7 +30,7 @@ export function UnsupportedNetworkPage({networkName}: Props){
                     URL do RPC: <span className="font-bold">https://sequoiarpc.sintrop.com</span>
                 </p>
                 <p className="text-white">
-                    ID da cadeia (ID da rede): <span className="font-bold">1500</span>
+                    ID da cadeia (ID da rede): <span className="font-bold">1600</span>
                 </p>
                 <p className="text-white">
                     Símbolo: <span className="font-bold">SIN</span>

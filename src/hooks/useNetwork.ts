@@ -11,9 +11,9 @@ const NETWORKS = {
   5777: "Ganache",
   11155111: "Sepolia Test Network",
   17000: "Holesky Test Network",
-  1500: "Sequoia Test Network",
+  1600: "Sequoia Test Network",
 };
-const targetNetwork = NETWORKS["1500"];
+const targetNetwork = NETWORKS["1600"];
 export const useNetwork = () => {
   const [supportedNetwork, setSupportedNetwork] = useState(true);
 
