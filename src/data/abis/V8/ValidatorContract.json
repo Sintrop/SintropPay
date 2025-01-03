@@ -372,98 +372,6 @@
     {
         "inputs": [
             {
-                "internalType": "uint256",
-                "name": "contributionId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getContributionValidations",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "validator",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "resourceId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "justification",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "majorityValidatorsCount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "createdAtBlockNumber",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct ResourceValidation[]",
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "inspectionId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getInspectionValidations",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "validator",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "resourceId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "justification",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "majorityValidatorsCount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "createdAtBlockNumber",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct ResourceValidation[]",
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "address",
                 "name": "userAddress",
                 "type": "address"
@@ -550,94 +458,6 @@
                 "internalType": "struct Validator",
                 "name": "",
                 "type": "tuple"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "getValidators",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "uint256",
-                        "name": "id",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "address",
-                        "name": "validatorWallet",
-                        "type": "address"
-                    },
-                    {
-                        "components": [
-                            {
-                                "internalType": "uint256",
-                                "name": "level",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "currentEra",
-                                "type": "uint256"
-                            }
-                        ],
-                        "internalType": "struct Pool",
-                        "name": "pool",
-                        "type": "tuple"
-                    }
-                ],
-                "internalType": "struct Validator[]",
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "workId",
-                "type": "uint256"
-            }
-        ],
-        "name": "getWorkValidations",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address",
-                        "name": "validator",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "resourceId",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "string",
-                        "name": "justification",
-                        "type": "string"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "majorityValidatorsCount",
-                        "type": "uint256"
-                    },
-                    {
-                        "internalType": "uint256",
-                        "name": "createdAtBlockNumber",
-                        "type": "uint256"
-                    }
-                ],
-                "internalType": "struct ResourceValidation[]",
-                "name": "",
-                "type": "tuple[]"
             }
         ],
         "stateMutability": "view",
@@ -818,6 +638,25 @@
         "name": "transferOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "validatorsAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {

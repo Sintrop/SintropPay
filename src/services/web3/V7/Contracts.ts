@@ -10,27 +10,27 @@ import InspectorContractJson from '../../../data/abis/V8/InspectorContract.json'
 import ResearcherContractJson from '../../../data/abis/V8/ResearcherContract.json';
 import ProducerContractJson from '../../../data/abis/V8/ProducerContract.json';
 
-export const validatorContractAddress = '0xaD2a48F19BC84eddD27f18De9f261635016493E8';
-export const validatorPoolContractAddress = '0x71715cFb10FC1C78A2928C11d20a8E192430828D';
-export const userContractAddress = '0x069B0CCe92F5c6F5bb43DEb735aDB688069885cC';
-export const supporterContractAddress = '0x2d3BF756eDa01a1fAFae55AbDFA8fe2A95Fb8A78';
-export const supporterPoolAddress = '0x1Fc4638cf47f851FF8fc0C9bC16648BA92A03994';
-export const researcherPoolContractAddress = '0x2c855936FBdF229CE57c36b35d4E0dc7928ED687';
-export const researcherContractAddress = '0xE81eB5222cd5051268ECA2dD4184EbA1977372E6';
-export const RCTokenAddress = '0x472e9e275c0948ABd31E36645f1e21E25bc4158a';
-export const producerPoolContractAddress = '0x68e67708aA8F226b0E385434EfDfBcDEDa7644d9';
-export const producerContractAddress = '0x783be4f2C0b4dFD666de91122C9A964C47F77537';
-export const inspectorPoolContractAddress = '0x80d26C016B8845C0646c64Cfb02Cb27Ee633851f';
-export const inspectorContractAddress = '0x417996E36c0C320E93bBE2942b375D93cE741694';
-export const developersPoolContractAddress = '0xb8A1d39C5827D3729f667fCDdE1ECd2B6A904D31';
-export const developerContractAddress = '0x6594b25A99ed3d2c306aBD38834eB8Ea787506bE';
-export const activistContractAddress = '0x3a45e588194e7E12921a12d513912A33BA63a9e3';
-export const activistPoolContractAddress = '0x739B42B5319F4BcA23CBF06C1a1de05B8B50E7Cf';
-export const sintropContractAddress = '0xf5571E56f573beE4a0c08cc362105aca62dcFbd1';
-export const categoryContractAddress = '0x71caDa4d72583a5287EcAE9Ca21448154df9a1B3';
-export const invitationContractAddress = '0x3bE63EE09AF3B56a23d81F730720A8C8597eC8C5';
-export const contributorContractAddress = '0xF23dd8A9692994F58F6bcC4C125F3E5e7631d29a';
-export const contributorPoolContractAddress = '0xA56E0368207E5F3d07200Ca7C0A8A7954958c9b5';
+export const validatorContractAddress = '0x648291fb228cdB775123f4B2a5BC896A475457C8';
+export const validatorPoolContractAddress = '0xB8E80394b341c29f6dE327CEFb24797bC1BFe40E';
+export const userContractAddress = '0x8bE0B014B7Fd2d3F698874C0CCc4EE2684fD6a25';
+export const supporterContractAddress = '0x6175a94A5848D793308e844DfAe37ee89313Cc8e';
+export const supporterPoolAddress = '0xed0D578fa387d61aa33E0e9762Dda62355B8CfD5';
+export const researcherPoolContractAddress = '0xFDa3a4fAd7BDd910897D8E7422475846a53d5A74';
+export const researcherContractAddress = '0xB2CE33276Ae84802b91C4E0F51b930f3a5e44F56';
+export const RCTokenAddress = '0xA2628da7B5C8B9921E52402438c320e03d191275';
+export const producerPoolContractAddress = '0xbaeD2F5C1e389C9909C6d480E096a6C368711C3E';
+export const producerContractAddress = '0xE851bF9778d1052696adb90d27392bAcc18dd497';
+export const inspectorPoolContractAddress = '0xe81754FbCE05beeE07f8742e1f78487Fb6F26059';
+export const inspectorContractAddress = '0x25dcCca15B1211969021F642FC3A746B965E67C9';
+export const developersPoolContractAddress = '0x2Cd832AC15EEE83b90ab91c87eC0e467eE315827';
+export const developerContractAddress = '0x59900BdCa243242A9666508a52B9A81489aAb459';
+export const activistContractAddress = '0xEc12E90A5F173c5d7235e186d02f3ad041B30639';
+export const activistPoolContractAddress = '0x0Fbbc578c6F48BA54E5e8A8d45DEB85482ADEa44';
+export const sintropContractAddress = '0x62b93FC1CBFFcb6ae6Ffe80D0e022E96aC97760a';
+export const categoryContractAddress = '0x8D3157abE0b340e45364CBA8eE8f84AD202CFD7e';
+export const invitationContractAddress = '0x206BC8DB206157f639D25315b2D968454F3d725A';
+export const contributorContractAddress = '0x52ECDb5E3055890a04e76259971D8Cb2e0c92C71';
+export const contributorPoolContractAddress = '0x978a9C4e5670C3C91E6a180448E88a41E8Dc1212';
 
 export const web3 = new Web3(window.ethereum);
 
