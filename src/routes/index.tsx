@@ -6,6 +6,7 @@ import { Receive } from "../pages/Receive/Receive";
 import { ConfirmPayment } from "../pages/ConfirmPayment/ConfirmPayment";
 import { Transactions } from "../pages/Transactions/Transactions";
 import { CheckoutRC } from "../pages/CheckoutRC/CheckoutRC";
+import { ResetPasswordRC } from "@/pages/ResetPasswordRC/ResetPasswordRC";
 
 export const router = createBrowserRouter([
     {
@@ -35,5 +36,9 @@ export const router = createBrowserRouter([
     {
         path: '/checkout-rc',
         Component: CheckoutRC
+    },
+    {
+        path: '/reset-password-rc',
+        Component: ResetPasswordRC
     },
 ])
