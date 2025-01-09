@@ -144,6 +144,15 @@ export function Home() {
 
                         <p className="text-white">Checkout</p>
                     </Link>
+
+                    <Link
+                        className="w-full h-14 bg-blue-primary rounded-md px-5 py-2 shadow-lg flex items-center gap-3"
+                        to='/reset-password-rc'
+                    >
+                        <Icon name='list' size={30}/>
+
+                        <p className="text-white">Recuperar senha</p>
+                    </Link>
                 </div>
 
                 {openTransactions.length > 0 && (
